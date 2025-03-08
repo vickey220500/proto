@@ -1,0 +1,110 @@
+<!-- <p>stepper works!</p>  -->
+<mat-stepper [labelPosition]="stepperMocky.labelPosition" [linear]="stepperMocky.isLinear"
+  [orientation]="stepperMocky.orientation">
+  <!-- <ng-container > -->
+  <mat-step *ngFor="let step of stepperMocky.steps let i = index" [stepControl]="formGroups[i]" state="phone">
+    <form [formGroup]="formGroups[i]">
+      <ng-template matStepLabel>{{ step.label }}</ng-template>
+
+      <div class="container-fluid card">
+        <div class="row d-flex justify-content-between ">
+          <ng-container *ngFor="let component of step.uiComponents">
+            <div class="col col-sm-12 col-md-4 col-lg-6 py-2">
+              <div *ngIf="component.type === 'text'">
+                <label class="form-label ">{{component.label}}</label><span *ngIf="component.mandatory" class="red">*</span>
+                <input class="form-control" type="text" [formControlName]="component.formControl">
+              </div>
+              <div *ngIf="component.type === 'date'">
+                <label class="form-label">{{component.label}}</label><span *ngIf="component.mandatory" class="red">*</span>
+                <input class="form-control" type="date" [formControlName]="component.formControl">
+              </div>
+              <div *ngIf="component.type === 'number'">
+                <label class="form-label">{{component.label}}</label><span *ngIf="component.mandatory" class="red">*</span>
+                <input class="form-control" type="number" [formControlName]="component.formControl">
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+
+      <!-- <div>
+          <mat-form-field *ngIf="component.type === 'date'">
+            <mat-label>{{component.label}}</mat-label>
+            <input matInput [formControlName]="component.formControl" >
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field *ngIf="component.type === 'text'">
+            <mat-label>{{component.label}}</mat-label>
+            <input matInput [formControlName]="component.formControl" [matDatepicker]="picker">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div> -->
+      <!-- @for (btn of step.stepButtons; track $index) { -->
+      <ng-container *ngFor="let btn of step.stepButtons">
+        <button *ngIf="btn.type=='previous'" mat-button matStepperPrevious type="button">{{btn.label}}</button>
+        <button *ngIf="btn.type=='next'" mat-button matStepperNext type="button"
+          (click)="onNext(i)">{{btn.label}}</button>
+        <button *ngIf="btn.type=='submit'" mat-button type="submit" (click)="onSubmit()">{{btn.label}}</button>
+      </ng-container>
+      <!-- } -->
+    </form>
+  </mat-step>
+  <!-- </ng-container> -->
+</mat-stepper>
+<!-- <mat-horizontal-stepper>
+    <mat-step label="Step 1">
+      <p>This is the content of Step 1</p>
+      <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step label="Step 2">
+      <p>This is the content of Step 2</p>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </mat-step>
+    <mat-step label="Step 3">
+      <p>This is the content of Step 3</p>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button>Done</button>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+  <mat-stepper  #stepper>
+    <mat-step [stepControl]="firstFormGroup" >
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="firstCtrl" placeholder="Last name, First name" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" >
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your address</ng-template>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                 required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper> -->

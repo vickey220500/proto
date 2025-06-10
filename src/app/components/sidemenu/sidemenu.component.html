@@ -1,0 +1,21 @@
+<div class="example-container">
+    <mat-toolbar class="example-toolbar">
+      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <h1 class="example-app-name">Stepper Dynamic App</h1>
+    </mat-toolbar>
+    <mat-sidenav-container class="example-sidenav-container">
+      <mat-sidenav #snav mode="side">
+        <mat-nav-list>
+          <a mat-list-item href="/">Home</a>
+          <a mat-list-item href="/stepper">Stepper</a>
+          <a mat-list-item href="/master">Master</a>
+          <a mat-list-item href="/componentPage/dailyLoad">Daily Load</a>
+        </mat-nav-list>
+      </mat-sidenav>
+  
+      <mat-sidenav-content>
+        <app-master></app-master>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  
+  </div>

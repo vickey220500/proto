@@ -11,15 +11,18 @@
           <ng-container *ngFor="let component of step.uiComponents">
             <div class="col col-sm-12 col-md-4 col-lg-6 py-2">
               <div *ngIf="component.type === 'text'">
-                <label class="form-label ">{{component.label}}</label><span *ngIf="component.mandatory" class="red">*</span>
+                <label class="form-label ">{{component.label}}</label><span *ngIf="component.mandatory"
+                  class="red">*</span>
                 <input class="form-control" type="text" [formControlName]="component.formControl">
               </div>
               <div *ngIf="component.type === 'date'">
-                <label class="form-label">{{component.label}}</label><span *ngIf="component.mandatory" class="red">*</span>
+                <label class="form-label">{{component.label}}</label><span *ngIf="component.mandatory"
+                  class="red">*</span>
                 <input class="form-control" type="date" [formControlName]="component.formControl">
               </div>
               <div *ngIf="component.type === 'number'">
-                <label class="form-label">{{component.label}}</label><span *ngIf="component.mandatory" class="red">*</span>
+                <label class="form-label">{{component.label}}</label><span *ngIf="component.mandatory"
+                  class="red">*</span>
                 <input class="form-control" type="number" [formControlName]="component.formControl">
               </div>
             </div>

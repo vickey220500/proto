@@ -1,0 +1,33 @@
+{
+    "rows": [
+        {
+            "columns": [
+                {
+                    "components": [
+                        {
+                            "type": "section",
+                            "componentId": "section1",
+                            "sectionBody": {
+                                "rows": [
+                                    {
+                                        "columns": [
+                                            {
+                                                "components": [
+                                                    {
+                                                        "type": "inputField",
+                                                        "lable": "firstName",
+                                                        "formcontrol": "firstName"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

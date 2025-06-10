@@ -26,7 +26,7 @@ export class DailyLoanComponent {
       mandatory: true,
     },
     { type: 'text', label: 'Last Name', formControl: 'lname' },
-    { type: 'number', label: 'AGE', formControl: 'age', mandatory: true },
+    { type: 'number', label: 'Age', formControl: 'age', mandatory: true },
     { type: 'text', label: 'Address', formControl: 'address', mandatory: true },
     {
       type: 'number',
@@ -46,12 +46,20 @@ export class DailyLoanComponent {
       formControl: 'aadhar',
       mandatory: true,
     },
+    {
+      type: 'number',
+      label: 'PAN No',
+      formControl: 'panNo',
+      mandatory: false,
+    },
     { type: 'number', label: 'Pincode', formControl: 'pincode', mandatory: true },
+    { type: 'number', label: 'Borrow Amount', formControl: 'borrowAmount', mandatory: true },
+    { type: 'number', label: 'Interest', formControl: 'interest', mandatory: true },
     {
       type: 'image',
       label: 'Upload Image',
       formControl: 'profilePic',
-      mandatory: false,
+      mandatory: true,
     },
   ];
   form!: FormGroup;
@@ -61,7 +69,7 @@ export class DailyLoanComponent {
     { label: 'Daily Loan Form', active: true },
   ];
   base64Image: string | null = null;
-
+  showImageModal: boolean = false;
   constructor(public fb: FormBuilder, public snackBar: MatSnackBar) {
     // Initialization logic can go here
   }
@@ -87,6 +95,7 @@ export class DailyLoanComponent {
     if (this.form.valid) {
       console.log('Form Data:', this.form.value);
     } else {
+      this.form.markAllAsTouched();
       this.snackBar.open('Fill mandatory Fields', 'close', { duration: 2000 });
     }
   }
@@ -107,4 +116,8 @@ export class DailyLoanComponent {
       reader.readAsDataURL(file);
     }
   }
+
+togglePreview(): void {
+  this.showImageModal = !this.showImageModal;
+}
 }

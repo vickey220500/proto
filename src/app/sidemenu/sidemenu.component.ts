@@ -21,15 +21,14 @@ export class SidemenuComponent {
   cookieValue: any;
   countryName: any;
   valueset: any;
+  isScreenSmall = window.innerWidth < 768;
+
 
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   constructor(
     private router: Router,) { }
 
-  /***
-   * Language Listing
-   */
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
     { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
@@ -41,8 +40,7 @@ export class SidemenuComponent {
   @Output() settingsButtonClicked = new EventEmitter();
 
   ngOnInit(): void {
-    // Cookies wise Language set
-    // this.cookieValue = this._cookiesService.get('lang');
+
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
@@ -50,42 +48,31 @@ export class SidemenuComponent {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+   
+      window.addEventListener('resize', () => {
+        this.isScreenSmall = window.innerWidth < 768;
+      });
   }
 
-  /***
-   * Language Value Set
-   */
   setLanguage(text: string, lang: string, flag: string) {
     this.countryName = text;
     this.flagvalue = flag;
     this.cookieValue = lang;
-    // this.languageService.setLanguage(lang);
+  
   }
 
-  /**
-   * Toggles the right sidebar
-   */
   toggleRightSidebar() {
     this.settingsButtonClicked.emit();
   }
 
-  /**
-   * Toggle the menu bar when having mobile screen
-   */
+ 
   toggleMobileMenu(event: any) {
     event.preventDefault();
     this.mobileMenuButtonClicked.emit();
   }
 
-  /**
-   * Logout the user
-   */
   logout() {
-    // if (environment.defaultauth === 'firebase') {
-    //   this.authService.logout();
-    // } else {
-    //   this.authFackservice.logout();
-    // }
+ 
     this.router.navigate(['/account/login']);
   }
 }

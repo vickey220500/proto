@@ -27,11 +27,11 @@ export class DailyLoanListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit() {
-    this.loadUsers(0, this.pageSize); // initial load
+    this.loadUsers(0, this.pageSize); 
   }
 
   loadUsers(pageIndex: number, pageSize: number) {
-    // simulate server-side API call
+
     const allUsers: User[] = Array.from({ length: 50 }, (_, i) => ({
       id: i + 1,
       name: `User ${i + 1}`,

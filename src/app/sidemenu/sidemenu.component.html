@@ -4,7 +4,8 @@
     <h1 class="example-app-name">Stepper Dynamic App</h1>
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container">
-    <mat-sidenav #snav mode="side">
+    <mat-sidenav #snav [mode]="isScreenSmall ? 'over' : 'side'" [opened]="!isScreenSmall">
+
       <mat-nav-list>
         <a mat-list-item href="/">Home</a>
         <a mat-list-item href="/stepper">Stepper</a>

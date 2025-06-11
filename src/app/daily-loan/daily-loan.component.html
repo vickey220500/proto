@@ -100,7 +100,7 @@
                 <div class="mb-3 mb-lg-0 row" *ngIf="field.type === 'image'">
                   <label for="example-datetime-local-input" class="col-md-2 col-form-label">{{field.label}}<span
                       class="text-danger" *ngIf="field.mandatory">*</span></label>
-                  <div class="col-md-10">
+                  <div class="col-md-8">
                     <input class="form-control" type="file" id="imageInput" (change)="onFileChange($event)"
                       accept="image/*"
                       [ngClass]="{'is-invalid': form.get(field.formControl)?.touched && form.get(field.formControl)?.invalid}">
@@ -109,16 +109,17 @@
                       *ngIf="form.get(field.formControl)?.touched && form.get(field.formControl)?.invalid">
                       <small *ngIf="form.get(field.formControl)?.errors?.['required']">This file is required.</small>
                     </div>
-                     <div class="mt-2" *ngIf="base64Image">
-      <button
-        type="button"
-        class="btn btn-outline-secondary btn-sm"
-        (click)="togglePreview()"
-      >
-        👁️ View
-      </button>
-    </div>
                   </div>
+
+                     <div class="col-md-2" *ngIf="base64Image">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary btn-sm"
+                        (click)="togglePreview()"
+                      >
+                        👁️ View
+                      </button>
+                    </div>
                 </div><!-- end row -->
               </div><!-- end col -->
             </ng-container>

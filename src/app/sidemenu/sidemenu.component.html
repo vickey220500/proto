@@ -1,18 +1,32 @@
 <div class="example-container">
   <mat-toolbar class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">Stepper Dynamic App</h1>
+    <!-- <h1 class="example-app-name">Stepper Dynamic App</h1> -->
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container">
     <mat-sidenav #snav [mode]="isScreenSmall ? 'over' : 'side'" [opened]="!isScreenSmall">
 
       <mat-nav-list>
-        <a mat-list-item href="/">Home</a>
-        <a mat-list-item href="/stepper">Stepper</a>
-        <a mat-list-item href="/master">Master</a>
-        <a mat-list-item href="/login">Login</a>
-        <a mat-list-item href="/dailyLoan">Daily Loan</a>
-        <a mat-list-item href="/dailyLoanList">Daily Loan List</a>
+        <a mat-list-item href="/" >
+          <mat-icon>home</mat-icon>
+          <span class="nav-text" *ngIf="!isCollapsed">Home</span>
+        </a>
+        <!-- <a mat-list-item href="/stepper">
+          <mat-icon>grid_view</mat-icon>
+          <span class="nav-text" *ngIf="!isCollapsed">Stepper</span>
+        </a> -->
+        <a mat-list-item href="/login">
+          <mat-icon>list</mat-icon>
+          <span class="nav-text" *ngIf="!isCollapsed">Login</span>
+        </a>
+        <a mat-list-item href="/dailyLoan">
+          <mat-icon>request_quote</mat-icon>
+          <span class="nav-text" *ngIf="!isCollapsed">Daily Loan</span>
+        </a>
+        <a mat-list-item href="/dailyLoanList">
+          <mat-icon>table_chart</mat-icon>
+          <span class="nav-text" *ngIf="!isCollapsed">Daily Loan List</span>
+        </a>
       </mat-nav-list>
     </mat-sidenav>
 

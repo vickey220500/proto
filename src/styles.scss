@@ -78,4 +78,14 @@ $stepper-theme: mat.define-light-theme((
 @import './assets/scss/custom.scss';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important; }
+
+.btn-primary {
+  background: #9a6735db;
+  border: none;
+  &:hover {
+    background: #64906C;
+    color: white;
+    border: none
+  }
+}

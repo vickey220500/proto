@@ -6,10 +6,12 @@ import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import {MatMenuModule} from '@angular/material/menu';
+
 @Component({
   selector: 'app-sidemenu',
   standalone: true,
-  imports: [MatToolbarModule,MatIconModule,RouterOutlet,MatListModule,MatSidenavModule,MatButtonModule,CommonModule],
+  imports: [MatToolbarModule,MatIconModule,RouterOutlet,MatListModule,MatSidenavModule,MatButtonModule, MatMenuModule ,CommonModule],
   templateUrl: './sidemenu.component.html',
   styleUrl: './sidemenu.component.scss'
 })
@@ -41,6 +43,6 @@ export class SidemenuComponent {
   }
 
   logout() {
-    this.router.navigate(['/account/login']);
+    this.router.navigate(['/login']);
   }
 }

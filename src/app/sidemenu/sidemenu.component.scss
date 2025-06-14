@@ -85,6 +85,35 @@ mat-sidenav-content {
   gap: 1rem;
 }
 
+::ng-deep .mat-mdc-menu-panel {
+  min-width: 112px;
+  max-width: 280px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  outline: 0;
+  border-radius: var(--mat-menu-container-shape);
+  background-color: var(--mat-menu-container-color);
+  will-change: transform, opacity;
+  margin-top: 1rem;
+}
+
+::ng-deep .custom-menu .menu-header,
+::ng-deep .custom-menu .menu-body,
+::ng-deep .custom-menu .menu-footer {
+  padding: 8px 16px;
+}
+
+::ng-deep .custom-menu .menu-header {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+::ng-deep .custom-menu .menu-footer {
+  text-align: center;
+}
+
+
 @media (max-width: 768px) {
   mat-sidenav {
     width: 200px;

@@ -27,7 +27,7 @@
         <form [formGroup]="form">
           <div class="row">
             <ng-container *ngFor="let field of fieldConfigure">
-              <div class="col-xl-6">
+              <div class="col-xl-6" [hidden]="field.hidden">
                 <div class="mb-3 row" *ngIf="field.type === 'text'">
                   <label for="example-text-input" class="col-md-2 col-form-label">{{field.label}}<span
                       class="text-danger" *ngIf="field.mandatory">*</span></label>
@@ -99,7 +99,7 @@
                 </div><!-- end row -->
                 <div class="mb-3 mb-lg-0 row" *ngIf="field.type === 'image'">
                   <label for="example-datetime-local-input" class="col-md-2 col-form-label">{{field.label}}<span
-                      class="text-danger" *ngIf="field.mandatory">*</span></label>
+                      class="text-danger" *ngIf="field.mandatory">*</span><mat-icon style="cursor: pointer;" (click)="togglePreview('showCaptureModal')">photo_camera</mat-icon></label>
                   <div class="col-md-8">
                     <input class="form-control" type="file" id="imageInput" (change)="onFileChange($event)"
                       accept="image/*"
@@ -115,7 +115,7 @@
                       <button
                         type="button"
                         class="btn btn-outline-secondary btn-sm"
-                        (click)="togglePreview()"
+                        (click)="togglePreview('showImageModal')"
                       >
                         👁️ View
                       </button>
@@ -138,16 +138,40 @@
   class="modal fade show"
   tabindex="-1"
   *ngIf="showImageModal"
-  style="display: block; background: rgba(0,0,0,0.5);"
+  style="display: block; background: #00000080;"
 >
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Image Preview</h5>
-        <button type="button" class="btn-close" (click)="togglePreview()"></button>
+        <button type="button" class="btn-close" (click)="togglePreview('showImageModal')"></button>
       </div>
       <div class="modal-body text-center">
         <img [src]="base64Image" alt="Full Preview" class="img-fluid rounded" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Photo Capture Modal -->
+<div
+  class="modal fade show"
+  tabindex="-1"
+  *ngIf="showCaptureModal"
+  style="display: block; background: #00000080;"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Image Capture</h5>
+        <button type="button" class="btn-close" (click)="togglePreview('showCaptureModal')"></button>
+      </div>
+      <div class="modal-body text-center">
+          <video #video width="300" height="225" autoplay></video>
+          <canvas #canvas width="300" height="225" style="display: none;"></canvas>
+          <button mat-raised-button color="primary" (click)="capturePhoto()">
+            <mat-icon>photo_camera</mat-icon> Capture Photo
+          </button>
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,29 +9,43 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { commonService } from '../services/common.service';
+import { UtilService } from '../services/util.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-daily-loan',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './daily-loan.component.html',
   styleUrl: './daily-loan.component.scss',
 })
 export class DailyLoanComponent {
+  @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
+@ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
+videoStream: MediaStream | null = null;
   fieldConfigure: any = [
     {
       type: 'text',
       label: 'First Name',
-      formControl: 'fname',
+      formControl: 'firstName',
       mandatory: true,
     },
-    { type: 'text', label: 'Last Name', formControl: 'lname' },
+    {
+      type: 'text',
+      label: 'Customer Type',
+      formControl: 'customerType',
+      mandatory: true,
+      hidden: true,
+      value: 'new',
+    },
+    { type: 'text', label: 'Last Name', formControl: 'lastName' },
     { type: 'number', label: 'Age', formControl: 'age', mandatory: true },
     { type: 'text', label: 'Address', formControl: 'address', mandatory: true },
     {
       type: 'number',
       label: 'Mobile No',
-      formControl: 'mbNo',
+      formControl: 'mobileNumber',
       mandatory: true,
     },
     {
@@ -43,11 +57,11 @@ export class DailyLoanComponent {
     {
       type: 'number',
       label: 'Addhar No',
-      formControl: 'aadhar',
+      formControl: 'aadharNo',
       mandatory: true,
     },
     {
-      type: 'number',
+      type: 'text',
       label: 'PAN No',
       formControl: 'panNo',
       mandatory: false,
@@ -57,7 +71,7 @@ export class DailyLoanComponent {
     { type: 'number', label: 'Interest', formControl: 'interest', mandatory: true },
     {
       type: 'image',
-      label: 'Upload Image',
+      label: 'Profile',
       formControl: 'profilePic',
       mandatory: true,
     },
@@ -70,7 +84,9 @@ export class DailyLoanComponent {
   ];
   base64Image: string | null = null;
   showImageModal: boolean = false;
-  constructor(public fb: FormBuilder, public snackBar: MatSnackBar) {
+  showCaptureModal: boolean = false;
+
+  constructor(public fb: FormBuilder, public snackBar: MatSnackBar, public commonService: commonService, public utilService: UtilService) {
     // Initialization logic can go here
   }
   ngOnInit(): void {
@@ -83,7 +99,7 @@ export class DailyLoanComponent {
       component.mandatory
         ? group.addControl(
             component.formControl,
-            new FormControl('', Validators.required)
+            new FormControl(component.value?component.value:'', Validators.required)
           )
         : group.addControl(component.formControl, new FormControl(''));
     });
@@ -94,6 +110,20 @@ export class DailyLoanComponent {
     // });
     if (this.form.valid) {
       console.log('Form Data:', this.form.value);
+      let data = this.form.value;
+      let url = 'dailyLogregister';
+       this.commonService.sendData(data,url).subscribe((res: any) => {
+        console.log('POST response:', res);
+        if (res.status) {
+          this.utilService.openSwal('Success', res.message, 'success', 'OK');
+        }else {
+          this.utilService.openSwal('Error', res.message, 'error', 'OK');
+        }
+      console.log('POST response:', res);
+    },(err:any)=>{
+       this.utilService.openSwal('Error', err.message, 'error', 'OK');
+    }
+    );
     } else {
       this.form.markAllAsTouched();
       this.snackBar.open('Fill mandatory Fields', 'close', { duration: 2000 });
@@ -117,7 +147,48 @@ export class DailyLoanComponent {
     }
   }
 
-togglePreview(): void {
-  this.showImageModal = !this.showImageModal;
+togglePreview(modal: string): void {
+  (this as any)[modal] = !(this as any)[modal];
+   if (modal === 'showCaptureModal' && this[modal]) {
+    this.initCamera();
+  }else if(modal === 'showCaptureModal' && !this[modal]) {
+    this.stopCamera();
+  }
+}
+
+initCamera() {
+  navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+     this.videoStream = stream;
+    if (this.video?.nativeElement) {
+      this.video.nativeElement.srcObject = stream;
+    }
+  }).catch(err => {
+    console.error('Camera init error:', err);
+  });
+}
+
+capturePhoto(): void {
+  const video = this.video?.nativeElement;
+  const canvas = this.canvas?.nativeElement;
+  if (!video || !canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    this.base64Image = canvas.toDataURL('image/png');
+    this.form.patchValue({ profilePic: this.base64Image });
+    this.form.get('profilePic')?.markAsTouched();
+    console.log('Captured Image Base64:', this.base64Image);
+    // Optional: send to backend
+  }
+}
+stopCamera() {
+  if (this.videoStream) {
+    this.videoStream.getTracks().forEach(track => track.stop());
+    this.videoStream = null;
+  }
+  if (this.video?.nativeElement) {
+    this.video.nativeElement.srcObject = null;
+  }
 }
 }

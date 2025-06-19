@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { commonService } from '../services/common.service';
 
 @Component({
   selector: 'app-daily-loan-list',
@@ -184,14 +185,16 @@ export class DailyLoanListComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  constructor(private commonService: commonService) {}
+
   ngOnInit() {
-    this.loadUsers(0, this.pageSize);
+    this.loadData(0, this.pageSize);
     this.displayedColumns = this.coloumnDefs.map(col => col.key);
     console.log('Displayed Columns:', this.displayedColumns);
 
   }
 
-  loadUsers(pageIndex: number, pageSize: number) {
+  loadData(pageIndex: number, pageSize: number) {
 
     // const allUsers: User[] = Array.from({ length: 50 }, (_, i) => ({
     //   id: i + 1,
@@ -199,15 +202,18 @@ export class DailyLoanListComponent {
     //   email: `user${i + 1}@example.com`,
     //   status: i % 2 === 0 ? 'Active' : 'Inactive'
     // }));
-
+    this.commonService.getData('dailyLoanData').subscribe((res: any) => {
+    this.dataSource = res.data;
     this.totalRecords = this.dataSource.length;
     const start = pageIndex * pageSize;
     const end = start + pageSize;
+    });
+
     // this.dataSource.data = allUsers.slice(start, end);
   }
 
   onPaginateChange(event: PageEvent) {
-    this.loadUsers(event.pageIndex, event.pageSize);
+    this.loadData(event.pageIndex, event.pageSize);
   }
 }
 

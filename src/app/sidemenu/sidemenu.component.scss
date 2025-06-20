@@ -92,10 +92,12 @@ mat-sidenav-content {
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
   outline: 0;
+  background-color: #e1f0d8;
   border-radius: var(--mat-menu-container-shape);
   background-color: var(--mat-menu-container-color);
   will-change: transform, opacity;
   margin-top: 1rem;
+
 }
 
 ::ng-deep .custom-menu .menu-header,
@@ -112,7 +114,18 @@ mat-sidenav-content {
 ::ng-deep .custom-menu .menu-footer {
   text-align: center;
 }
+::ng-deep .mat-mdc-menu-content {
+  margin: 0;
+  padding: 8px 0;
+  list-style-type: none;
+  background-color: #e1f0d8;
 
+}
+
+::ng-deep .mat-mdc-menu-item:not([disabled]):hover {
+   background-color: #aed581 !important; 
+ 
+}
 
 @media (max-width: 768px) {
   mat-sidenav {

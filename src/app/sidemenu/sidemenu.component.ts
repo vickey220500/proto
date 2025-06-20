@@ -45,4 +45,5 @@ export class SidemenuComponent {
   logout() {
     this.router.navigate(['/login']);
   }
+  
 }

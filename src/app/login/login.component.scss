@@ -40,12 +40,33 @@ button.active {
     box-shadow: none !important;
 }
 
-::ng-deep .h6 {
-    font-size: 24px;
-    color: #2c3e50;
-    font-weight: 600;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: center;
+// ::ng-deep .h6 {
+//     font-size: 24px;
+//     color: #2c3e50;
+//     font-weight: 600;
+//     margin-bottom: 16px;
+//     text-transform: uppercase;
+//     letter-spacing: 1px;
+//     text-align: center;
+//   }
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #e0f7fa inset !important; /* Change to your background */
+    -webkit-text-fill-color: #004d40 !important; /* Change text color */
+    transition: background-color 5000s ease-in-out 0s;
   }
+  
+ 
+  input:focus {
+    background-color: #e0f2f1 !important; /* Your desired color on focus */
+    color: #00695c !important;
+    outline: none; /* Optional: remove outline */
+    border: 1px solid #26a69a; /* Optional: focus border */
+  }
+  
+::ng-deep .mat-mdc-button {
+  --mdc-theme-primary: #9a6735db;
+  --mdc-theme-on-primary: white;
+  --mdc-ripple-color: #9a6735db;
+}
+  

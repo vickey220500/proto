@@ -17,5 +17,8 @@ export class LoginComponent {
   onTabChange(index: number) {
     this.isLogin = index === 0; 
   }
-
+login() {
+    // Implement login logic here
+    console.log('Login clicked');
+  }
 }

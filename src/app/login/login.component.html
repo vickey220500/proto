@@ -6,7 +6,7 @@
     margin-bottom: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-align: center;">Bharath Finance</h6>
+    text-align: center;">Learning</h6>
     <div class="row d-flex align-items-center justify-content-center h-100">
      
       <div class="col-md-8 col-lg-7 col-xl-6 text-center">
@@ -40,13 +40,13 @@
           </div>
           <a href="#">Forgot password?</a>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
       </form>
     </mat-tab>
   
     <!-- Register Tab -->
     <mat-tab label="Register">
-      <form class="mt-4">
+      <form (click)="login()" class="mt-4">
         <div class="mb-3">
           <label>Full Name</label>
           <input type="text" class="form-control form-control-lg" />

@@ -69,4 +69,10 @@ input:-webkit-autofill {
   --mdc-theme-on-primary: white;
   --mdc-ripple-color: #9a6735db;
 }
-  
+
+.tab-scroll-container {
+    max-height: 50vh; 
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+

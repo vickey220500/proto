@@ -1,8 +1,57 @@
 <div class="example-container">
-  <mat-toolbar class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <!-- <h1 class="example-app-name">Stepper Dynamic App</h1> -->
+  <mat-toolbar color="primary" class="example-toolbar" style="display: flex; justify-content: space-between;">
+
+  
+  
+
+    <div>
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div>
+      
+      <mat-icon mat-button [matMenuTriggerFor]="belowMenu" style="font-size: 45px;
+      height: 42px;
+      width: 54px;">account_circle</mat-icon>
+    
+    <mat-menu #belowMenu="matMenu" yPosition="below" class="custom-menu">
+
+      <!-- Header -->
+      <div class="menu-header">
+        <span>Account</span>
+      </div>
+    
+      <mat-divider></mat-divider>
+    
+      <!-- Body -->
+      <div class="menu-body">
+        <button mat-menu-item >
+          <mat-icon>person</mat-icon>
+          <span>Profile</span>
+        </button>
+        <button mat-menu-item >
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      </div>
+    
+      <mat-divider></mat-divider>
+    
+      <!-- Footer -->
+      <div class="menu-footer">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    
+    </mat-menu>
+    
+    </div>
   </mat-toolbar>
+  
+
   <mat-sidenav-container class="example-sidenav-container">
     <mat-sidenav #snav [mode]="isScreenSmall ? 'over' : 'side'" [opened]="!isScreenSmall">
 

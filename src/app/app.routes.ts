@@ -15,6 +15,8 @@ export const routes: Routes = [
         {path:'stepper',component:StepperComponent},
         {path:'master', component:MasterComponentComponent},
         {path:'dailyLoan',component:DailyLoanComponent},
-        {path:'dailyLoanList',component:DailyLoanListComponent}
+        {path:'dailyLoanList',component:DailyLoanListComponent},
+        {path:'dpl',component:DailyLoanComponent},
+        {path:'dplList',component:DailyLoanListComponent}
     ]}
 ];

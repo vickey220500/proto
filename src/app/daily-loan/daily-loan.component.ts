@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
@@ -12,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { commonService } from '../services/common.service';
 import { UtilService } from '../services/util.service';
 import { MatIconModule } from '@angular/material/icon';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-daily-loan',
   standalone: true,
@@ -24,7 +25,7 @@ export class DailyLoanComponent {
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
 @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
 videoStream: MediaStream | null = null;
-  fieldConfigure: any = [
+dailyLoan:any = [
     {
       type: 'text',
       label: 'First Name',
@@ -76,20 +77,88 @@ videoStream: MediaStream | null = null;
       mandatory: true,
     },
   ];
+dpl:any = [
+    {
+      type: 'text',
+      label: 'First Name',
+      formControl: 'firstName',
+      mandatory: true,
+    },
+    {
+      type: 'text',
+      label: 'Customer Type',
+      formControl: 'customerType',
+      mandatory: true,
+      hidden: true,
+      value: 'new',
+    },
+    { type: 'text', label: 'Last Name', formControl: 'lastName' },
+    { type: 'number', label: 'Age', formControl: 'age', mandatory: true },
+    { type: 'text', label: 'Address', formControl: 'address', mandatory: true },
+    {
+      type: 'number',
+      label: 'Mobile No',
+      formControl: 'mobileNumber',
+      mandatory: true,
+    },
+    {
+      type: 'email',
+      label: 'Email',
+      formControl: 'email',
+      mandatory: false,
+    },
+    {
+      type: 'number',
+      label: 'Addhar No',
+      formControl: 'aadharNo',
+      mandatory: true,
+    },
+    {
+      type: 'text',
+      label: 'PAN No',
+      formControl: 'panNo',
+      mandatory: false,
+    },
+    { type: 'number', label: 'Pincode', formControl: 'pincode', mandatory: true },
+    { type: 'number', label: 'Borrow Amount', formControl: 'borrowAmount', mandatory: true },
+    { type: 'number', label: 'Interest', formControl: 'interest', mandatory: true },
+    {
+      type: 'image',
+      label: 'Profile',
+      formControl: 'profilePic',
+      mandatory: true,
+    },
+  ];
+  fieldConfigure: any = []
   form!: FormGroup;
   title: string = 'Daily Loan Form';
-  breadcrumbItems = [
-    { label: 'Daily Loan' },
-    { label: 'Daily Loan Form', active: true },
-  ];
+  breadcrumbItems:any = [];
   base64Image: string | null = null;
   showImageModal: boolean = false;
   showCaptureModal: boolean = false;
+  currentPage: any;
 
-  constructor(public fb: FormBuilder, public snackBar: MatSnackBar, public commonService: commonService, public utilService: UtilService) {
+  constructor(public fb: FormBuilder, public snackBar: MatSnackBar, public commonService: commonService, public utilService: UtilService, public router: Router, public route: ActivatedRoute) {
     // Initialization logic can go here
   }
   ngOnInit(): void {
+    // this.route.snapshot
+    this.currentPage= this.router.url;
+    if (this.currentPage === '/dailyLoan') {
+      this.fieldConfigure = this.dailyLoan;
+      this.title = 'Daily Loan Form';
+      this.breadcrumbItems = [
+    { label: 'Daily Loan' },
+    { label: 'Daily Loan Form', active: true },
+  ]} else if (this.currentPage === '/dpl') {
+    this.fieldConfigure = this.dpl;
+      this.title = 'DPL Form';
+      this.breadcrumbItems =[
+    { label: 'DPL' },
+    { label: 'DPL Form', active: true },
+  ]  }
+    console.log(this.currentPage,'Route Snapshot:', this.route.snapshot.pathFromRoot);
+
     this.createForm();
   }
 
@@ -111,7 +180,7 @@ videoStream: MediaStream | null = null;
     if (this.form.valid) {
       console.log('Form Data:', this.form.value);
       let data = this.form.value;
-      let url = 'dailyLogregister';
+      let url = 'insertDailyLoan';
        this.commonService.sendData(data,url).subscribe((res: any) => {
         console.log('POST response:', res);
         if (res.status) {

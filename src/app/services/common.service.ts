@@ -11,4 +11,7 @@ export class commonService{
   sendData(data: any,url:string) {
     return this.http.post(`${this.baseUrl}/${url}`, data);
   }
+  getData(url:string) {
+    return this.http.get(`${this.baseUrl}/${url}`);
+  }
 }

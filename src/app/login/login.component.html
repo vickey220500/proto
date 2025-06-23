@@ -6,20 +6,20 @@
     margin-bottom: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-align: center;">Learning</h6>
+    text-align: center;">Bharath Finance</h6>
     <div class="row d-flex align-items-center justify-content-center h-100">
-     
+
       <div class="col-md-8 col-lg-7 col-xl-6 text-center">
-        <img 
-  [src]="isLogin ? '../../assets/images/converted_from_svg-removebg-preview.png' : '../../assets/images/reg-removebg-preview.png'" 
-  class="img-fluid" 
+        <img
+  [src]="isLogin ? '../../assets/images/converted_from_svg-removebg-preview.png' : '../../assets/images/reg-removebg-preview.png'"
+  class="img-fluid"
   alt="Auth image"
   style="max-height: 400px;"
 />
       </div>
  <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 
-        
+
   <mat-tab-group (selectedIndexChange)="onTabChange($event)">
     <!-- Login Tab -->
     <mat-tab label="Login">
@@ -44,7 +44,7 @@
         </form>
       </div>
     </mat-tab>
-  
+
     <!-- Register Tab -->
     <mat-tab label="Register">
       <div class="tab-scroll-container">
@@ -69,7 +69,7 @@
             <label>Pan No</label>
             <input type="number" class="form-control form-control-lg" formControlName="pancard" />
           </div>
-     
+
           <div class="mb-3">
             <label>Address</label>
             <input type="text" class="form-control form-control-lg" formControlName="address" />
@@ -87,11 +87,10 @@
       </div>
     </mat-tab>
   </mat-tab-group>
-  
-  
-     
 
-   
+
+
+
       </div>
     </div>
   </div>

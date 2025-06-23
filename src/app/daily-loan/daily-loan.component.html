@@ -74,8 +74,8 @@
                       class="text-danger" *ngIf="field.mandatory">*</span></label>
                   <div class="col-md-10">
                     <input class="form-control" type="number" [formControlName]="field.formControl"
-                      id="example-number-input"
-                      [ngClass]="{'is-invalid': form.get(field.formControl)?.touched && form.get(field.formControl)?.invalid}">
+                      id="example-number-input" [readOnly]="field.readOnly"
+                      [ngClass]="{'is-invalid': form.get(field.formControl)?.touched && form.get(field.formControl)?.invalid}" (change)="onChange($event,field)">
                     <!-- Error Message -->
                     <div class="text-danger mt-1"
                       *ngIf="form.get(field.formControl)?.touched && form.get(field.formControl)?.invalid">

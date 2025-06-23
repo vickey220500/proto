@@ -6,6 +6,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { DailyLoanComponent } from './daily-loan/daily-loan.component';
 import { DailyLoanListComponent } from './daily-loan-list/daily-loan-list.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 export const routes: Routes = [
@@ -17,6 +18,7 @@ export const routes: Routes = [
         {path:'dailyLoan',component:DailyLoanComponent},
         {path:'dailyLoanList',component:DailyLoanListComponent},
         {path:'dpl',component:DailyLoanComponent},
-        {path:'dplList',component:DailyLoanListComponent}
+        {path:'dplList',component:DailyLoanListComponent},
+        {path:'dashboard',component:DashboardComponent}
     ]}
 ];

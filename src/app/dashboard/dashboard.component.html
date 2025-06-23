@@ -1,0 +1,22 @@
+
+<div class="dashboard">
+    <h4>Business Dashboard</h4>
+    <div class="cards-container" style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div
+        class="card"
+        *ngFor="let item of cards"
+        [ngClass]="{ 'selected': selectedCard === item.key }"
+        (click)="selectCard(item.key)"
+        style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; width: 200px; cursor: pointer;"
+      >
+        <h6>{{ item.label }}</h6>
+      </div>
+    </div>
+    <div style="margin-top: 30px;" *ngIf="selectedCard">
+  <canvas id="chartCanvas" width="980" height="300"></canvas>
+  </div>
+    </div>
+  <!-- <full-calendar [options]="calendarOptions"></full-calendar> -->
+
+  
+

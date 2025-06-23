@@ -189,6 +189,7 @@ export class DailyLoanListComponent {
 
   ngOnInit() {
     this.loadData(0, this.pageSize);
+    
     this.displayedColumns = this.coloumnDefs.map(col => col.key);
     console.log('Displayed Columns:', this.displayedColumns);
 
@@ -204,6 +205,7 @@ export class DailyLoanListComponent {
     // }));
     this.commonService.getData('dailyLoanData').subscribe((res: any) => {
     this.dataSource = res.data;
+    console.log('Data Source:', this.dataSource);
     this.totalRecords = this.dataSource.length;
     const start = pageIndex * pageSize;
     const end = start + pageSize;

@@ -18,62 +18,64 @@
 <mat-card>
   <mat-card-header class="header-with-button">
     <mat-card-title style="color:#9a6735db">Daily Loan List</mat-card-title>
-    <button class="btn btn-primary w-md" [routerLink]="['/dailyLoan']" routerLinkActive="router-link-active"  type="button">New<mat-icon>add</mat-icon></button>
+    <div style="display: flex; " >
+      <!-- <button class="btn btn-primary"
+          routerLinkActive="router-link-active" style="margin-right: 8px;" (click)="downloadPDF()" type="button">
+          Pdf<mat-icon>picture_as_pdf</mat-icon>
+        </button> -->
+      <button class="btn btn-primary"
+          routerLinkActive="router-link-active" style="margin-right: 8px;" (click)="downloadExcel()" type="button">
+          Excel<mat-icon>table_view</mat-icon>
+        </button>
+      <ng-container *ngFor="let action of headerActions">
+        <button *ngIf="action.type === 'button' && action.action==='route'" class="btn btn-primary" [routerLink]="action.route"
+          routerLinkActive="router-link-active" style="margin-right: 8px;" type="button">
+          {{ action.label }}<mat-icon>{{ action.icon }}</mat-icon>
+        </button>
+        <button *ngIf="action.type === 'button' && action.action==='apiCall'" style="margin-right: 8px;" class="btn btn-primary" (click)="checkedData()" type="button">
+          {{ action.label }}
+        </button>
+      </ng-container>
+    </div>
   </mat-card-header>
 
   <div class="responsive-table-wrapper">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="pagedData" class="mat-elevation-z8">
 
-  <!-- Checkbox Column -->
-  <!-- <ng-container *ngIf="enableCheckbox" matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox
-        (change)="masterToggle()"
-        [checked]="isAllSelected()"
-        [indeterminate]="selection.hasValue() && !isAllSelected()">
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="selection.toggle(row)"
-                    [checked]="selection.isSelected(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container> -->
+      <!-- Dynamic Data Columns -->
+      <ng-container *ngFor="let column of coloumnDefs" [matColumnDef]="column.key">
+        <th mat-header-cell *matHeaderCellDef>{{ column.label }}
+          <mat-checkbox *ngIf="column.type === 'checkbox'" [checked]="isAllSelected()"
+            [indeterminate]="isIndeterminate()" (change)="toggleAll()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="column.type==='checkbox'">
+            <mat-checkbox (click)="$event.stopPropagation()" [checked]="isSelected(row)"
+              (change)="toggleRow(row)"></mat-checkbox>
+          </span>
+          <span *ngIf="column.type === 'text'">{{ row[column.key] }}</span>
+          <img *ngIf="column.type === 'image' && row[column.key]" [src]="row[column.key]" alt="Profile" width="40"
+            height="40" style="border-radius: 50%; object-fit: cover" />
+        </td>
+      </ng-container>
 
-  <!-- Dynamic Data Columns -->
-  <ng-container *ngFor="let column of coloumnDefs" [matColumnDef]="column.key">
-    <th mat-header-cell *matHeaderCellDef>{{ column.label }}</th>
-    <ng-template [ngIf]="column.type=='text'"><td mat-cell *matCellDef="let row">{{ row[column.key] }}</td></ng-template>
-    <ng-template [ngIf]="column.type=='image'"><td mat-cell *matCellDef="let row"><img
-  *ngIf="row.profilePic?.data"
-  [src]="'data:' + row.profilePic.contentType + ';base64,' + row.profilePic.data"
-  alt="Profile"
-  width="40" height="40"
-  style="border-radius: 50%; object-fit: cover"
-/></td></ng-template>
-
-  </ng-container>
-
-  <!-- Edit Column -->
-  <!-- <ng-container *ngIf="enableEdit" matColumnDef="actions">
+      <!-- Edit Column -->
+      <!-- <ng-container *ngIf="enableEdit" matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let row">
       <a [routerLink]="[editUrlPrefix, row.id]" class="edit-link" title="Edit">✏️</a>
     </td>
   </ng-container> -->
 
-  <!-- Row Definitions -->
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+      <!-- Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
   </div>
 
-  <mat-paginator
-    [length]="totalRecords"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[5, 10, 20]"
-    (page)="onPaginateChange($event)">
+  <mat-paginator [length]="dataSource.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)">
   </mat-paginator>
 </mat-card>

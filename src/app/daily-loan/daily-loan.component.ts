@@ -262,6 +262,7 @@ export class DailyLoanComponent {
           console.log('POST response:', res);
           if (res.status) {
             this.utilService.openSwal('Success', res.message, 'success', 'OK');
+            this.router.navigate(['/dailyLoanList']);
           } else {
             this.utilService.openSwal('Error', res.message, 'error', 'OK');
           }

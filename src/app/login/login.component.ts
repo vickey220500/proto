@@ -47,30 +47,83 @@ registerForm: FormGroup;
     this.isLogin = index === 0; 
   }
 
-  onSubmit(): void {
+  // onSubmit(): void {
    
-    if (this.loginForm.invalid) return;
+  //   if (this.loginForm.invalid) return;
 
-    this.loading = true;
-    const { userId, password } = this.loginForm.value;
-    console.log('val', this.loginForm.value);
+  //   this.loading = true;
+  //   const { userId, password } = this.loginForm.value;
+  //   console.log('val', this.loginForm.value);
 
-    this.api.login(userId, password).subscribe({
-      next: (response) => {
-        this.loading = false;
-        console.log('Login successful', response);
-        this.router.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        this.loading = false;
-        this.errorMessage = 'Invalid userid or password';
-        console.error('Login error:', error);
-      },
-    });
-  }
+  //   this.api.login(userId, password).subscribe({
+  //     next: (response) => {
+  //       this.loading = false;
+  //       console.log('Login successful', response);
+  //       this.router.navigate(['/dashboard']);
+  //     },
+  //     error: (error) => {
+  //       this.loading = false;
+  //       this.errorMessage = 'Invalid userid or password';
+  //       console.error('Login error:', error);
+  //     },
+  //   });
+  // }
+
+  // onSubmit(): void {
+  // if (this.loginForm.invalid) return;
+
+  // this.loading = true;
+  // const { userId, password } = this.loginForm.value;
+
+  // this.api.login(userId, password).subscribe({
+  //   next: (response) => {
+  //     this.loading = false;
+
+  //     console.log('Login successful', response);
+  //     const username = response?.user.userName || 'User'; 
+
+  //     this.api.setUsername(username);
+  //     this.router.navigate(['/dashboard']);
+  //   },
+  //   error: (error) => {
+  //     this.loading = false;
+  //     this.errorMessage = 'Invalid userid or password';
+  //     console.error('Login error:', error);
+  //   },
+  // })}
+
+  onSubmit(): void {
+  if (this.loginForm.invalid) return;
+
+  this.loading = true;
+  const { userId, password } = this.loginForm.value;
+
+  this.api.login(userId, password).subscribe({
+    next: (response) => {
+      this.loading = false;
+
+      console.log('Login successful', response);
+      const username = response?.user.userName || 'User';
+
+    
+      localStorage.setItem('username', username);
+
+     
+      this.api.setUsername(username);
+
+      this.router.navigate(['/dashboard']);
+    },
+    error: (error) => {
+      this.loading = false;
+      this.errorMessage = 'Invalid userid or password';
+      console.error('Login error:', error);
+    },
+  });
+}
+
   
   onRegister(): void {
-    debugger
+   
     if (this.registerForm.invalid) return;
 
     this.loading = true;

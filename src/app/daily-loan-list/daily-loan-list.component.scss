@@ -90,3 +90,69 @@ mat-card {
     flex-direction: row;
   }
 }
+
+
+.page-banner-container {
+  position: relative;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.banner-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-button {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.banner-images {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 0;
+  width: 100%;
+}
+
+.banner-images img {
+  width: 100%;              
+  min-height: 200px;         
+  height: auto;              
+  object-fit: contain;       
+  border-radius: 8px;
+  display: block;
+  background-color: #f0f0f0; 
+  margin-bottom: 10px;
+}
+
+
+
+.banner-footer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: #c4a921;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-info h6 {
+  margin: 0;
+  font-size: 16px;
+  text-transform: uppercase;
+}

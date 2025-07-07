@@ -7,6 +7,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
+import { commonService } from '../services/common.service';
 
 @Component({
   selector: 'app-sidemenu',
@@ -22,12 +23,18 @@ export class SidemenuComponent {
   @Output() mobileMenuButtonClicked = new EventEmitter();
   @Output() settingsButtonClicked = new EventEmitter();
 
-  constructor(private router: Router) {}
-
+  constructor(private router: Router,private api: commonService) {}
+username: string | null = null;
   ngOnInit(): void {
     window.addEventListener('resize', () => {
       this.isScreenSmall = window.innerWidth < 768;
     });
+  // this.api.username$.subscribe((name) => {
+  //     this.username = name;
+  //   });
+    this.username = localStorage.getItem('username');
+
+  
   }
 
   toggleCollapse() {
@@ -43,7 +50,9 @@ export class SidemenuComponent {
   }
 
   logout() {
-    this.router.navigate(['/login']);
+ 
+  localStorage.removeItem('username');
+  this.router.navigate(['/login']);
   }
   
 }

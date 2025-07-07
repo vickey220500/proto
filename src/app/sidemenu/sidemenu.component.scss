@@ -87,12 +87,12 @@ mat-sidenav-content {
 
 ::ng-deep .mat-mdc-menu-panel {
   min-width: 112px;
-  max-width: 280px;
-  overflow: auto;
+  max-width: 300px !important;
+   overflow: none !important;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
   outline: 0;
-  background-color: #e1f0d8;
+  background-color: #e1f0d8 !important;
   border-radius: var(--mat-menu-container-shape);
   background-color: var(--mat-menu-container-color);
   will-change: transform, opacity;
@@ -119,6 +119,7 @@ mat-sidenav-content {
   padding: 8px 0;
   list-style-type: none;
   background-color: #e1f0d8;
+  overflow: hidden !important;
 
 }
 

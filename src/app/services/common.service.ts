@@ -1,11 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, tap } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 
 @Injectable({providedIn:'root'})
 
 export class commonService{
   private baseUrl = 'http://localhost:3000/api';
+  private usernameSubject = new BehaviorSubject<string | null>(null);
+  username$ = this.usernameSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -30,5 +32,13 @@ export class commonService{
   login(userId: string, password: string): Observable<any> {
     const payload = { userId, password };
     return this.http.post(`${this.baseUrl}/login`, payload);
+  }
+
+   setUsername(username: string) {
+    this.usernameSubject.next(username);
+  }
+
+  getUsername(): string | null {
+    return this.usernameSubject.value;
   }
 }

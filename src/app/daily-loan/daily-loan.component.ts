@@ -64,7 +64,7 @@ export class DailyLoanComponent {
     {
       type: 'text',
       label: 'PAN No',
-      formControl: 'panNo',
+      formControl: 'panCardNumber',
       mandatory: false,
     },
     {
@@ -181,6 +181,42 @@ export class DailyLoanComponent {
       label: 'Interest',
       formControl: 'interest',
       mandatory: true,
+    },
+    {
+      type: 'number',
+      label: 'Interest Amount',
+      formControl: 'interestAmount',
+      mandatory: true,
+      hidden: true,
+    },
+    {
+      type: 'number',
+      label: 'No. of Days',
+      formControl: 'noOfDays',
+      mandatory: true,
+       changeLogic: [
+        {
+          targetField: 'interestAmount',
+          details: {
+            method: 'percentage',
+            fields: ['borrowAmount', 'interest'],
+          },
+        },
+        {
+          targetField: 'calculatedAmount',
+          details: {
+            method: 'addition',
+            fields: ['borrowAmount', 'interestAmount'],
+          },
+        },
+      ],
+    },
+    {
+      type: 'number',
+      label: 'Calculated Amount',
+      formControl: 'calculatedAmount',
+      mandatory: true,
+      readOnly: true,
     },
     {
       type: 'image',
@@ -362,6 +398,8 @@ export class DailyLoanComponent {
       return values[0] - values[1];
     }else if (method === 'addition') {
       return values[0] + values[1];
+    }else if (method === 'multiplication') {
+      return values[0] * values[1];
     }
     return 0; // Default case, should not happen
   }

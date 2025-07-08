@@ -78,6 +78,13 @@ export class DailyLoanComponent {
       label: 'Borrow Amount',
       formControl: 'borrowAmount',
       mandatory: true,
+      changeLogic: [{
+          targetField: 'perDayAmount',
+          details: {
+            method: 'division',
+            fields: ['borrowAmount', 'noOfDays'],
+          },
+        }]
     },
     {
       type: 'number',
@@ -98,7 +105,7 @@ export class DailyLoanComponent {
             method: 'subtraction',
             fields: ['borrowAmount', 'interestAmount'],
           },
-        },
+        }
       ],
     },
     {
@@ -107,6 +114,21 @@ export class DailyLoanComponent {
       formControl: 'interestAmount',
       mandatory: true,
       hidden: true,
+    },
+    {
+      type: 'number',
+      label: 'No. of Days',
+      formControl: 'noOfDays',
+      mandatory: true,
+      hidden: true,
+      value:100
+    },
+    {
+      type: 'number',
+      label: 'Per Day Amount',
+      formControl: 'perDayAmount',
+      mandatory: true,
+      readOnly: true,
     },
     {
       type: 'number',
@@ -400,6 +422,8 @@ export class DailyLoanComponent {
       return values[0] + values[1];
     }else if (method === 'multiplication') {
       return values[0] * values[1];
+    }else if (method === 'division') {
+      return values[1] !== 0 ? values[0] / values[1] : 0; // Avoid division by zero
     }
     return 0; // Default case, should not happen
   }

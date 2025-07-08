@@ -7,6 +7,13 @@
   color:white
 }
 
+input[readonly],
+textarea[readonly] {
+    background-color: #f5f5f5; /* light grey */
+    color: #555;               /* dim text color */
+    border-color: #ddd;        /* softer border */
+}
+
 @media (min-width: 768px) {
     .col-md-2 {
         flex: 0 0 auto;

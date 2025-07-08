@@ -38,7 +38,8 @@ export class DailyLoanListComponent {
   { key: 'email', label: 'Email', type: 'text' },
   { key: 'mobileNumber', label: 'Mobile No', type: 'text' },
   { key: 'panCardNumber', label: 'PAN No', type: 'text' },
-  { key: 'pincode', label: 'Pincode', type: 'text' }
+  { key: 'pincode', label: 'Pincode', type: 'text' },
+  { key: 'createdAt', label: 'Created Date', type: 'date' }
 ];
 
 dlHeaderAction:any[] = [{type:'button',label: 'Pay', action: 'apiCall', url:'/dlPayment'},{type:'button',action:'route',label: 'Add', icon: 'add',route: '/dailyLoan'},]
@@ -123,6 +124,28 @@ const data = this.dataSource.map(({ profilePic, ...rest }:any) => rest);
 this.utilService.downloadExcel(data);
 }
 
+  // Generate a unique color for each avatar based on the user's name
+  getAvatarColor(row: any): string {
+    const colors = [
+      '#3f51b5', // blue
+      '#e91e63', // pink
+      '#4caf50', // green
+      '#ff9800', // orange
+      '#9c27b0', // purple
+      '#009688', // teal
+      '#f44336', // red
+      '#607d8b', // blue grey
+      '#795548', // brown
+      '#2196f3', // light blue
+    ];
+    const name = (row.firstName || '') + (row.lastName || '');
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % colors.length;
+    return colors[index];
+  }
 }
 
 

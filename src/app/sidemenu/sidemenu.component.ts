@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
@@ -12,7 +12,7 @@ import { commonService } from '../services/common.service';
 @Component({
   selector: 'app-sidemenu',
   standalone: true,
-  imports: [MatToolbarModule,MatIconModule,RouterOutlet,MatListModule,MatSidenavModule,MatButtonModule, MatMenuModule ,CommonModule],
+  imports: [MatToolbarModule,MatIconModule,RouterOutlet,MatListModule,MatSidenavModule,MatButtonModule, MatMenuModule ,CommonModule,RouterModule],
   templateUrl: './sidemenu.component.html',
   styleUrl: './sidemenu.component.scss'
 })
@@ -34,7 +34,7 @@ username: string | null = null;
   //   });
     this.username = localStorage.getItem('username');
 
-  
+
   }
 
   toggleCollapse() {
@@ -50,9 +50,9 @@ username: string | null = null;
   }
 
   logout() {
- 
+
   localStorage.removeItem('username');
   this.router.navigate(['/login']);
   }
-  
+
 }

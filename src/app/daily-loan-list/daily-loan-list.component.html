@@ -13,6 +13,14 @@
   </div>
 </div>
 
+<div *ngIf="showChart" style="margin: 20px; border: 1px solid #ccc; padding: 20px; border-radius: 8px; background: #fefefe;">
+  <!-- <h3 style="margin-bottom: 16px; color: #333;">Borrow Amount by User</h3> -->
+<div *ngIf="showChart" style="margin: 20px;">
+ 
+  <canvas #chartCanvas width="800" height="150"></canvas>
+</div>
+
+</div>
 
 
 <mat-card>
@@ -26,6 +34,10 @@
       <button class="btn btn-primary"
           routerLinkActive="router-link-active" style="margin-right: 8px;" (click)="downloadExcel()" type="button">
           Excel<mat-icon>table_view</mat-icon>
+        </button>
+         <button class="btn btn-primary"
+          routerLinkActive="router-link-active" style="margin-right: 8px;" (click)="toggleChart()" type="button">
+          Chart <mat-icon>pie_chart</mat-icon>
         </button>
       <ng-container *ngFor="let action of headerActions">
         <button *ngIf="action.type === 'button' && action.action==='route'" class="btn btn-primary" [routerLink]="action.route"

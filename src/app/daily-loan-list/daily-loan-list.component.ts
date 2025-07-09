@@ -10,6 +10,8 @@ import { RouterModule } from '@angular/router';
 import { commonService } from '../services/common.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UtilService } from '../services/util.service';
+import { Chart, ChartConfiguration } from 'chart.js';
+import { ElementRef } from '@angular/core';
 @Component({
   selector: 'app-daily-loan-list',
   standalone: true,
@@ -188,6 +190,10 @@ dlHeaderAction:any[] = [{type:'button',label: 'Pay', action: 'apiCall', url:'/dl
   pagedData: any[] = [];
   currentPage = 0;
   headerActions: any[] = [];
+  @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
+chart: Chart | undefined;
+showChart: boolean = false;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -262,6 +268,56 @@ downloadExcel() {
 const data = this.dataSource.map(({ profilePic, ...rest }:any) => rest);
 this.utilService.downloadExcel(data);
 }
+
+toggleChart(): void {
+  this.showChart = !this.showChart;
+  if (this.showChart) {
+    setTimeout(() => {
+      this.renderChart();
+    }, 0); // Wait for DOM to update
+  } else {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+  }
+}
+
+renderChart(): void {
+  const labels = this.dataSource.map((item: any) => item.firstName);
+  const data = this.dataSource.map((item: any) => item.borrowAmount);
+
+  const config: ChartConfiguration = {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Borrow Amount',
+        data,
+        backgroundColor: '#9a6735cc',
+        borderColor: '#9a6735',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+  if (this.chart) {
+    this.chart.destroy();
+  }
+
+  const ctx = this.chartCanvas.nativeElement.getContext('2d');
+  if (ctx) {
+    this.chart = new Chart(ctx, config);
+  }
+}
+
 
 }
 

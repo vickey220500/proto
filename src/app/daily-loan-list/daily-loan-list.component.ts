@@ -44,7 +44,7 @@ export class DailyLoanListComponent {
   { key: 'createdAt', label: 'Created Date', type: 'date' }
 ];
 
-dlHeaderAction:any[] = [{type:'button',label: 'Pay', action: 'apiCall', url:'/dlPayment'},{type:'button',action:'route',label: 'Add', icon: 'add',route: '/dailyLoan'},]
+dlHeaderAction:any[] = [{type:'button',label: 'Pay', action: 'apiCall', apiDetails:{url:'/dailyLoanPay',method:'post'}},{type:'button',action:'route',label: 'Add', icon: 'add',route: '/dailyLoan'},]
   // dataSource:any = [ { "firstName": "Vignesh", "lastName": "", "aadharNo": 123456789012, "address": "123, Gandhi Street, Chennai", "age": 28, "borrowAmount": 50000, "interest": 7.5, "email": "abc@example.com", "mobileNumber": 9876543210, "panCardNumber": "ABCDE1234F", "pincode": 600001, "profilePic": { "data": "base64", "contentType": "image/png" } }];
   pageSize = 5;
   selectedRows: any[] = [];

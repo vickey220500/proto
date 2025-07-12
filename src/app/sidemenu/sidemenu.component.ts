@@ -3,7 +3,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
@@ -26,9 +26,9 @@ export class SidemenuComponent {
   constructor(private router: Router,private api: commonService) {}
 username: string | null = null;
   ngOnInit(): void {
-    window.addEventListener('resize', () => {
-      this.isScreenSmall = window.innerWidth < 768;
-    });
+
+  // this.checkScreen();
+  // window.addEventListener('resize', () => this.checkScreen());
   // this.api.username$.subscribe((name) => {
   //     this.username = name;
   //   });
@@ -37,17 +37,20 @@ username: string | null = null;
 
   }
 
-  toggleCollapse() {
-    this.isCollapsed = !this.isCollapsed;
-    const hostElem = document.querySelector('app-root');
-    if (hostElem) {
-      if (this.isCollapsed) {
-        hostElem.classList.add('collapsed');
-      } else {
-        hostElem.classList.remove('collapsed');
-      }
-    }
+ toggleMenu(snav: MatSidenav) {
+  if (this.isScreenSmall) {
+    snav.toggle(); // normal toggle on small screens
+  } else {
+    this.isCollapsed = !this.isCollapsed; // collapse/expand on large screens
   }
+}
+
+// checkScreen() {
+//   this.isScreenSmall = window.innerWidth < 768;
+//   if (this.isScreenSmall) {
+//     this.isCollapsed = false; // always expanded in overlay
+//   }
+// }
 
   logout() {
 

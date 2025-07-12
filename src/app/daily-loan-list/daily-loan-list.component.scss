@@ -6,9 +6,9 @@ mat-card {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 
     mat-card-title {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
-      color: #3f51b5;
+      color:#9a6735db;
       margin-bottom: 16px;
     }
 
@@ -48,6 +48,22 @@ mat-card {
     }
   }
 
+  ::ng-deep .mdc-data-table__header-cell {
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    outline: none;
+    text-align: left;
+    white-space: nowrap;
+}
+
+::ng-deep .mdc-data-table__cell {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+     white-space: nowrap;
+}
   @media (max-width: 768px) {
     mat-card {
       padding: 12px;
@@ -56,11 +72,14 @@ mat-card {
         font-size: 18px;
       }
 
-      .mat-header-cell,
-      .mat-cell {
-        font-size: 13px;
-        padding: 10px;
-      }
+  .mat-header-cell,
+.mat-cell {
+  padding: 12px;
+  font-size: 14px;
+  min-width: 120px;
+  word-wrap: break-word;
+}
+
     }
   }
 
@@ -91,78 +110,4 @@ mat-card {
   }
 }
 
-
-.page-banner-container {
-  width: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 20px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
-
-.banner-image-wrapper {
-  position: relative;
-}
-
-.banner-image-wrapper img {
-  width: 100%;
-  // min-height: 200px;
-  // height: auto;
-  height:6rem;
-  object-fit: cover;
-  display: block;
-}
-
-.banner-content {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: white;
-}
-
-.avatar {
-  background-color: #a3bf3c;
-  color: white;
-  font-weight: bold;
-  width: 60px;
-  height: 60px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.text-content {
-  margin-left: 15px;
-}
-
-.text-content h4 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.text-content p {
-  margin: 0;
-  font-size: 14px;
-}
-
-.action-btn {
-  margin-left: auto;
-  padding: 6px 14px;
-  background-color: white;
-  color: #007bff;
-  border: none;
-  border-radius: 16px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  white-space: nowrap;
-}
 

@@ -13,10 +13,7 @@
   align-items: center;
 }
 
-.example-app-name {
-  margin-left: 8px;
-  font-size: 20px;
-}
+
 
 .example-sidenav-container {
   flex: 1;
@@ -24,27 +21,7 @@
   min-height: 0;
 }
 
-mat-sidenav {
-  width: 220px;
-  background-color: #e1f0d8;
-  transition: width 0.3s ease;
 
-  &.collapsed {
-    width: 60px;
-
-    mat-icon {
-      margin: 0 auto;
-    }
-
-    a {
-      justify-content: center;
-    }
-
-    span {
-      display: none;
-    }
-  }
-}
 
 mat-nav-list a {
   display: flex !important;
@@ -63,19 +40,10 @@ mat-nav-list a {
     font-size: 24px;
   }
 
-  .nav-text {
-    white-space: nowrap;
-  }
+  
 }
 
 
-mat-sidenav-content {
-  flex: 1;
-  padding: 16px;
-  overflow: auto;
-  box-sizing: border-box;
-  background: #e6f0dc82;
-}
 
 ::ng-deep .mdc-list-item__primary-text {
   text-overflow: ellipsis;
@@ -106,10 +74,7 @@ mat-sidenav-content {
   padding: 8px 16px;
 }
 
-::ng-deep .custom-menu .menu-header {
-  font-weight: bold;
-  font-size: 14px;
-}
+
 
 ::ng-deep .custom-menu .menu-footer {
   text-align: center;
@@ -128,16 +93,31 @@ mat-sidenav-content {
  
 }
 
-@media (max-width: 768px) {
-  mat-sidenav {
-    width: 200px;
-  }
 
-  .example-sidenav-container {
-    flex-direction: column;
+mat-sidenav {
+  width: 220px !important; // expanded
+  transition: width 0.3s ease !important;
+  background-color: #e1f0d8;
+
+  &.collapsed {
+    width: 60px !important; // collapsed
+  }
+}
+
+.example-sidenav-container {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+
+  // use collapsed state to control margin on content
+  &.collapsed mat-sidenav-content {
+    margin-left: 60px !important; // match collapsed width
   }
 
   mat-sidenav-content {
-    padding: 8px;
+    margin-left: 220px !important; // match expanded width
+    transition: margin-left 0.3s ease !important;
   }
 }
+
+

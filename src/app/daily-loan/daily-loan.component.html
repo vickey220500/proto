@@ -4,15 +4,15 @@
     <div class="banner-content">
       <div class="avatar">DL</div>
       <div class="text-content">
-        <h4 style="color: #9a6735db;">{{title.toUpperCase()}}</h4>
-        <p style="color: #9a6735db;">{{title.toUpperCase()}}</p>
+        <h4 >{{title.toUpperCase()}}</h4>
+        <p >{{title.toUpperCase()}}</p>
       </div>
-      <button class="action-btn" style="color: #9a6735db;">{{title.toUpperCase()}}</button>
+      <button class="action-btn">{{title.toUpperCase()}}</button>
     </div>
   </div>
 </div>
 <!-- start page title -->
-<div class="row" style="margin-bottom: 1.5rem">
+<div class="row mb-3" style="width: 98%; margin: 0 auto; padding: 0;">
   <div class="col-12">
     <div class="page-title-box d-flex align-items-center justify-content-between">
       <!-- <h4 class="mb-0">{{title}}</h4> -->
@@ -30,7 +30,7 @@
   </div>
 </div>
 <!-- end page title -->
-<div class="row">
+<div class="row mb-3" style="width: 98%; margin: 0 auto; padding: 0;">
   <div class="col-12">
     <div class="card">
       <div class="card-header justify-content-between d-flex align-items-center" style="background-color: #9a6735db;">
@@ -133,7 +133,9 @@
                         👁️ View
                       </button>
                     </div>
-                </div><!-- end row -->
+                </div>
+                
+                <!-- end row -->
               </div><!-- end col -->
             </ng-container>
           </div><!-- end row -->
@@ -179,12 +181,16 @@
         <h5 class="modal-title">Image Capture</h5>
         <button type="button" class="btn-close" (click)="togglePreview('showCaptureModal')"></button>
       </div>
-      <div class="modal-body text-center">
+      <div class="modal-body text-center" style="display: flex;">
           <video #video width="300" height="225" autoplay></video>
           <canvas #canvas width="300" height="225" style="display: none;"></canvas>
           <button mat-raised-button color="primary" (click)="capturePhoto()">
             <mat-icon>photo_camera</mat-icon> Capture Photo
           </button>
+           <button class="btn btn-primary"
+          routerLinkActive="router-link-active" style="margin-right: 8px;" type="button">
+          Excel<mat-icon>table_view</mat-icon>
+        </button>
       </div>
     </div>
   </div>

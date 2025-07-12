@@ -6,9 +6,9 @@ mat-card {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 
     mat-card-title {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
-      color: #3f51b5;
+      color:#9a6735db;
       margin-bottom: 16px;
     }
 
@@ -48,6 +48,22 @@ mat-card {
     }
   }
 
+  ::ng-deep .mdc-data-table__header-cell {
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    outline: none;
+    text-align: left;
+    white-space: nowrap;
+}
+
+::ng-deep .mdc-data-table__cell {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+     white-space: nowrap;
+}
   @media (max-width: 768px) {
     mat-card {
       padding: 12px;
@@ -56,11 +72,14 @@ mat-card {
         font-size: 18px;
       }
 
-      .mat-header-cell,
-      .mat-cell {
-        font-size: 13px;
-        padding: 10px;
-      }
+  .mat-header-cell,
+.mat-cell {
+  padding: 12px;
+  font-size: 14px;
+  min-width: 120px;
+  word-wrap: break-word;
+}
+
     }
   }
 
@@ -89,6 +108,17 @@ mat-card {
     display: flex;
     flex-direction: row;
   }
+}
+
+
+.router-link-span {
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.router-link-span:hover {
+  color: #0d47a1;
 }
 
 

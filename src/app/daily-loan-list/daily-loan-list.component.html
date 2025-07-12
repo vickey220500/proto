@@ -5,10 +5,10 @@
     <div class="banner-content">
       <div class="avatar">DL</div>
       <div class="text-content">
-        <h4 style="color: #9a6735db;">{{listData.pageTitle}}</h4>
-        <p style="color: #9a6735db;">{{listData.pageTitle}}</p>
+        <h4 >{{listData.pageTitle}}</h4>
+        <p >{{listData.pageTitle}}</p>
       </div>
-      <button class="action-btn" style="color: #9a6735db;">{{listData.pageTitle}}</button>
+      <button class="action-btn" >{{listData.pageTitle}}</button>
     </div>
   </div>
 </div>
@@ -25,7 +25,7 @@
 
 <mat-card>
   <mat-card-header class="header-with-button">
-    <mat-card-title style="color:#9a6735db">{{listData.pageTitle}}</mat-card-title>
+    <mat-card-title >{{listData.pageTitle}}</mat-card-title>
     <div style="display: flex; " >
       <!-- <button class="btn btn-primary"
           routerLinkActive="router-link-active" style="margin-right: 8px;" (click)="downloadPDF()" type="button">
@@ -84,16 +84,6 @@
           </ng-container>
         </td>
       </ng-container>
-
-      <!-- Edit Column -->
-      <!-- <ng-container *ngIf="enableEdit" matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef> Actions </th>
-    <td mat-cell *matCellDef="let row">
-      <a [routerLink]="[editUrlPrefix, row.id]" class="edit-link" title="Edit">✏️</a>
-    </td>
-  </ng-container> -->
-
-      <!-- Row Definitions -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>

@@ -2,9 +2,10 @@
 <mat-toolbar color="primary" class="example-toolbar" style="display: flex; justify-content: space-between;">
   <!-- Left side: Menu button -->
   <div>
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
+   <button mat-icon-button (click)="toggleMenu(snav)">
+  <mat-icon>menu</mat-icon>
+</button>
+
   </div>
 
   <!-- Middle: Optional app title or empty for spacing -->
@@ -14,7 +15,7 @@
 
   <!-- Right side: Username and account icon -->
   <div style="display: flex; align-items: center; gap: 10px;">
-    <span style="font-weight: 500; color: #fff;">{{ username }}</span>
+    <span class="example-app-name">{{ username }}</span>
 
     <mat-icon mat-button [matMenuTriggerFor]="belowMenu" style="font-size: 45px; height: 42px; width: 54px;">
       account_circle
@@ -30,8 +31,8 @@
         </button>
         </div>
        <div class="col-md-auto">
-            <h3>{{username}}</h3>
-            <h6>testgmail.com</h6>
+            <span class="card-title">{{username}}</span><br>
+            <span class="card-email">testgmail.com</span>
         </div>
       </div>
 
@@ -40,12 +41,12 @@
       <!-- Body -->
       <div class="menu-body">
       <div>
-         <p>User ID</p>
-      <h6>EMP001</h6>
+         <p class="card-label">User ID</p>
+      <h6 class="card-value">EMP001</h6>
       </div>
       <div>
-          <p>User ID</p>
-      <h6>EMP001</h6>
+          <p class="card-label">User ID</p>
+      <h6 class="card-value">EMP001</h6>
       </div>
 
       </div>
@@ -58,14 +59,14 @@
           <div class="col-6">
             <button mat-menu-item>
           <mat-icon style="color:#9a6735db">settings</mat-icon>
-          <span>Settings</span>
+          <span class="card-btn">Settings</span>
         </button>
           </div>
 
        <div class="col-6">
          <button mat-menu-item (click)="logout()">
           <mat-icon style="color:#9a6735db">logout</mat-icon>
-          <span>Logout</span>
+          <span class="card-btn">Logout</span>
         </button>
        </div>
 
@@ -77,8 +78,17 @@
 
 
 
-  <mat-sidenav-container class="example-sidenav-container">
-    <mat-sidenav #snav [mode]="isScreenSmall ? 'over' : 'side'" [opened]="!isScreenSmall">
+  <mat-sidenav-container 
+  class="example-sidenav-container"
+  [class.collapsed]="!isScreenSmall && isCollapsed">
+
+   <mat-sidenav 
+  #snav 
+  [mode]="isScreenSmall ? 'over' : 'side'" 
+  [opened]="!isScreenSmall"
+  [class.collapsed]="!isScreenSmall && isCollapsed">
+
+
 
       <mat-nav-list>
         <a mat-list-item [routerLink]="['/dashboard']"  >

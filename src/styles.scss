@@ -78,7 +78,7 @@ $stepper-theme: mat.define-light-theme((
 @import './assets/scss/custom.scss';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important; }
+body { margin: 0; font-family: "Segoe UI", Tahoma,Open Sans, Geneva, Verdana, sans-serif !important; }
 
 .btn-primary {
   background: #9a6735db;
@@ -89,3 +89,140 @@ body { margin: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !
     border: none
   }
 }
+
+
+.nav-text {
+  font-size: 12px;
+  font-style: Open Sans, sans-serif;
+  color: #000000de;
+  text-transform: uppercase;
+  font-weight: 500;
+  }
+
+ .example-app-name {
+  margin-left: 8px;
+ font-size: 14px;
+  font-style: Open Sans, sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.card-title{
+  font-size: 14px !important;
+  font-style: Open Sans, sans-serif !important;
+  text-transform: uppercase !important;
+  font-weight: 500;
+}
+
+.card-email{
+  font-size: 11px !important;
+  font-style: Open Sans, sans-serif !important;
+}
+.card-label{
+  font-size: 10px;
+    font-weight: 600;
+     font-style: Open Sans, sans-serif !important;
+    line-height: 1;
+    margin-bottom: 5px;
+    color: var(--title-text-color);
+    text-transform: uppercase;
+   
+}
+
+.card-value{
+    font-size: 12px;
+     font-style: Open Sans, sans-serif !important;
+    color: #414141;  
+}
+.card-btn{
+    font-size: 12px;
+     font-style: Open Sans, sans-serif !important;
+    color: #414141;
+    font-weight: 600;
+}
+
+.page-banner-container {
+  width: 97%;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 20px;
+  // padding:0px 0px 0px 21px;
+  margin-left: 1rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.banner-image-wrapper {
+  position: relative;
+}
+
+.banner-image-wrapper img {
+  width: 100%;
+  // min-height: 200px;
+  // height: auto;
+  height:6rem;
+  object-fit: cover;
+  display: block;
+}
+
+.banner-content {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+
+.avatar {
+  background-color: #a3bf3c;
+  color: white;
+  font-weight: bold;
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.text-content {
+  margin-left: 15px;
+}
+
+.text-content h4 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #9a6735db;
+}
+
+.text-content p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #9a6735db;
+}
+
+.action-btn {
+  margin-left: auto;
+  padding: 6px 14px;
+  background-color: #e1f0d8;
+  color: #9a6735db;
+  border: none;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.title{
+  font-size: 20px;
+  font-weight: 600;
+  color: #9a6735db;
+}
+

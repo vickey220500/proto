@@ -1,0 +1,135 @@
+[
+  {
+    "type": "text",
+    "label": "First Name",
+    "formControl": "firstName",
+    "mandatory": true
+  },
+  {
+    "type": "text",
+    "label": "Customer Type",
+    "formControl": "customerType",
+    "mandatory": true,
+    "hidden": true,
+    "value": "new"
+  },
+  {
+    "type": "text",
+    "label": "Last Name",
+    "formControl": "lastName"
+  },
+  {
+    "type": "number",
+    "label": "Age",
+    "formControl": "age",
+    "mandatory": true
+  },
+  {
+    "type": "text",
+    "label": "Address",
+    "formControl": "address",
+    "mandatory": true
+  },
+  {
+    "type": "number",
+    "label": "Mobile No",
+    "formControl": "mobileNumber",
+    "mandatory": true
+  },
+  {
+    "type": "email",
+    "label": "Email",
+    "formControl": "email",
+    "mandatory": false
+  },
+  {
+    "type": "number",
+    "label": "Addhar No",
+    "formControl": "aadharNo",
+    "mandatory": true
+  },
+  {
+    "type": "text",
+    "label": "PAN No",
+    "formControl": "panCardNumber",
+    "mandatory": false
+  },
+  {
+    "type": "number",
+    "label": "Pincode",
+    "formControl": "pincode",
+    "mandatory": true
+  },
+  {
+    "type": "number",
+    "label": "Borrow Amount",
+    "formControl": "borrowAmount",
+    "mandatory": true,
+    "changeLogic": [
+      {
+        "targetField": "perDayAmount",
+        "details": {
+          "method": "division",
+          "fields": ["borrowAmount", "noOfDays"]
+        }
+      }
+    ]
+  },
+  {
+    "type": "number",
+    "label": "Interest",
+    "formControl": "interest",
+    "mandatory": true,
+    "changeLogic": [
+      {
+        "targetField": "interestAmount",
+        "details": {
+          "method": "percentage",
+          "fields": ["borrowAmount", "interest"]
+        }
+      },
+      {
+        "targetField": "calculatedAmount",
+        "details": {
+          "method": "subtraction",
+          "fields": ["borrowAmount", "interestAmount"]
+        }
+      }
+    ]
+  },
+  {
+    "type": "number",
+    "label": "Interest Amount",
+    "formControl": "interestAmount",
+    "mandatory": true,
+    "hidden": true
+  },
+  {
+    "type": "number",
+    "label": "No. of Days",
+    "formControl": "noOfDays",
+    "mandatory": true,
+    "hidden": true,
+    "value": 100
+  },
+  {
+    "type": "number",
+    "label": "Per Day Amount",
+    "formControl": "perDayAmount",
+    "mandatory": true,
+    "readOnly": true
+  },
+  {
+    "type": "number",
+    "label": "Calculated Amount",
+    "formControl": "calculatedAmount",
+    "mandatory": true,
+    "readOnly": true
+  },
+  {
+    "type": "image",
+    "label": "Profile",
+    "formControl": "profilePic",
+    "mandatory": true
+  }
+]

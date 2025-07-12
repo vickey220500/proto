@@ -166,3 +166,12 @@ mat-card {
   white-space: nowrap;
 }
 
+.router-link-span {
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.router-link-span:hover {
+  color: #0d47a1;
+}

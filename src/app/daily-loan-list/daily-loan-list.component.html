@@ -5,10 +5,10 @@
     <div class="banner-content">
       <div class="avatar">DL</div>
       <div class="text-content">
-        <h4 style="color: #9a6735db;">DAILY LOAN LIST</h4>
-        <p style="color: #9a6735db;">DAILY LOAN LIST</p>
+        <h4 style="color: #9a6735db;">{{listData.pageTitle}}</h4>
+        <p style="color: #9a6735db;">{{listData.pageTitle}}</p>
       </div>
-      <button class="action-btn" style="color: #9a6735db;">DAILY LOAN LIST</button>
+      <button class="action-btn" style="color: #9a6735db;">{{listData.pageTitle}}</button>
     </div>
   </div>
 </div>
@@ -25,7 +25,7 @@
 
 <mat-card>
   <mat-card-header class="header-with-button">
-    <mat-card-title style="color:#9a6735db">Daily Loan List</mat-card-title>
+    <mat-card-title style="color:#9a6735db">{{listData.pageTitle}}</mat-card-title>
     <div style="display: flex; " >
       <!-- <button class="btn btn-primary"
           routerLinkActive="router-link-active" style="margin-right: 8px;" (click)="downloadPDF()" type="button">
@@ -44,7 +44,7 @@
           routerLinkActive="router-link-active" style="margin-right: 8px;" type="button">
           {{ action.label }}<mat-icon>{{ action.icon }}</mat-icon>
         </button>
-        <button *ngIf="action.type === 'button' && action.action==='apiCall'" style="margin-right: 8px;" class="btn btn-primary" (click)="checkedData()" type="button">
+        <button *ngIf="action.type === 'button' && action.action==='apiCall'" style="margin-right: 8px;" class="btn btn-primary" (click)="apiCall(action)" type="button">
           {{ action.label }}
         </button>
       </ng-container>
@@ -67,6 +67,9 @@
               (change)="toggleRow(row)"></mat-checkbox>
           </ng-container>
           <ng-container *ngIf="column.type === 'text'">{{ row[column.key] }}</ng-container>
+          <ng-container *ngIf="column.type === 'routerlink'">
+            <span class="router-link-span" (click)="navigateToDetail(row,column)">{{ row[column.key] }}</span>
+          </ng-container>
           <ng-container *ngIf="column.type === 'date'">
             <span style="white-space: nowrap;">{{ row[column.key] | date: 'dd-MM-yyyy hh:mm a' }}</span>
           </ng-container>

@@ -1,0 +1,50 @@
+{ 
+    "pageTitle":"DPL LIST",
+    "coloumnDefs" : [
+    { "key": "checkbox",  "type": "checkbox" },
+    { "key": "profilePic", "label": "Profile", "type": "image" },
+      { "key": "loanId", "label": "Loan Id", "type": "routerlink", "apiDetails":{"url":"/dlDetail","body":["loanId"]} },
+    { "key": "name", "label": "Name", "type": "text" },
+    { "key": "aadharNo", "label": "Aadhar No", "type":   "text" },
+    { "key": "address", "label": "Address", "type": "text" },
+    { "key": "age", "label": "Age", "type": "text" },
+    { "key": "borrowAmount", "label": "Borrow Amount", "type": "text" },
+    { "key": "interest", "label": "Interest (%)", "type": "text" },
+    { "key": "email", "label": "Email", "type": "text" },
+    { "key": "mobileNumber", "label": "Mobile No", "type": "text" },
+    { "key": "panCardNumber", "label": "PAN No", "type": "text" },
+    { "key": "pincode", "label": "Pincode", "type": "text" },
+    { "key": "createdAt", "label": "Created Date", "type": "date" },
+    { "key": "perDayAmount", "label": "Per Day Amount", "type": "text" }
+  ],
+  "dlHeaderAction" : [
+    {
+      "type":"button",
+      "label":"Pay",
+      "action":"apiCall",
+      "apiDetails":{
+        "url":"/dailyLoanPay",
+        "method":"post",
+        "body":[
+          {"key":"customerId","value":"customerId"},
+          {"key":"loanId","value":"loanId"},
+          {"key":"amount","value":"perDayAmount"}
+        ]
+      }
+    },
+    {
+      "type":"button",
+      "action":"route",
+      "label":"Add",
+      "icon":"add",
+      "route":"/dailyLoan"
+    }
+  ] ,
+  "tableDataSource":{
+    "type":"api",
+    "apiDetails":{
+        "url":"/dailyLoanData",
+        "method":"get"
+      }
+  }
+}

@@ -19,6 +19,7 @@ export const routes: Routes = [
         {path:'dailyLoanList',component:DailyLoanListComponent},
         {path:'dpl',component:DailyLoanComponent},
         {path:'dplList',component:DailyLoanListComponent},
+        {path:'dlTransactionDetail',component:DailyLoanListComponent},
         {path:'dashboard',component:DashboardComponent}
     ]}
 ];

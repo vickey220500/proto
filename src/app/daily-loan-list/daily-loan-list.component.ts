@@ -6,12 +6,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { commonService } from '../services/common.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UtilService } from '../services/util.service';
 import { Chart, ChartConfiguration } from 'chart.js';
 import { ElementRef } from '@angular/core';
+import dlListJson from '../../jsons/dlListJson.json';
+import dplListJson from '../../jsons/dplListJson.json';
+import dlTransactionDetailJson from '../../jsons/dlTransactionDetail.json'
 @Component({
   selector: 'app-daily-loan-list',
   standalone: true,
@@ -26,25 +29,10 @@ export class DailyLoanListComponent {
 
   displayedColumns: any[] = []
 
- coloumnDefs: any[] = [
-  { key: 'checkbox',  type: 'checkbox' },
-  { key: 'profilePic', label: 'Profile', type: 'image' },
-  { key: 'name', label: 'Name', type: 'text' },
-  // { key: 'firstName', label: 'First Name', type: 'text' },
-  // { key: 'lastName', label: 'Last Name', type: 'text' },
-  { key: 'aadharNo', label: 'Aadhar No', type: 'text' },
-  { key: 'address', label: 'Address', type: 'text' },
-  { key: 'age', label: 'Age', type: 'text' },
-  { key: 'borrowAmount', label: 'Borrow Amount', type: 'text' },
-  { key: 'interest', label: 'Interest (%)', type: 'text' },
-  { key: 'email', label: 'Email', type: 'text' },
-  { key: 'mobileNumber', label: 'Mobile No', type: 'text' },
-  { key: 'panCardNumber', label: 'PAN No', type: 'text' },
-  { key: 'pincode', label: 'Pincode', type: 'text' },
-  { key: 'createdAt', label: 'Created Date', type: 'date' }
-];
+ coloumnDefs: any[]=[];
 
-dlHeaderAction:any[] = [{type:'button',label: 'Pay', action: 'apiCall', apiDetails:{url:'/dailyLoanPay',method:'post'}},{type:'button',action:'route',label: 'Add', icon: 'add',route: '/dailyLoan'},]
+ headerAction:any;
+listData:any;
   // dataSource:any = [ { "firstName": "Vignesh", "lastName": "", "aadharNo": 123456789012, "address": "123, Gandhi Street, Chennai", "age": 28, "borrowAmount": 50000, "interest": 7.5, "email": "abc@example.com", "mobileNumber": 9876543210, "panCardNumber": "ABCDE1234F", "pincode": 600001, "profilePic": { "data": "base64", "contentType": "image/png" } }];
   pageSize = 5;
   selectedRows: any[] = [];
@@ -54,22 +42,39 @@ dlHeaderAction:any[] = [{type:'button',label: 'Pay', action: 'apiCall', apiDetai
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
 chart: Chart | undefined;
 showChart: boolean = false;
+currentPageUrl: any;
+tableDataSource:any;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private commonService: commonService, public utilService:UtilService) {}
+  constructor(private commonService: commonService, public utilService:UtilService,
+    public router: Router,
+    public route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.currentPageUrl = this.router.url.split('?')[0]
+    console.log(this.currentPageUrl,'currentpage',this.router);    
+    if (this.currentPageUrl === '/dailyLoanList') {
+      this.listData = dlListJson;
+      this.coloumnDefs = this.listData.coloumnDefs;
+      this.headerActions = this.listData.dlHeaderAction;
+    } else if (this.currentPageUrl === '/dplList') {
+      this.listData = dplListJson;
+      this.coloumnDefs = this.listData.coloumnDefs;
+      this.headerActions = this.listData.dlHeaderAction;
+    } else if (this.currentPageUrl === '/dlTransactionDetail') {
+      this.listData = dlTransactionDetailJson;
+      this.coloumnDefs = this.listData.coloumnDefs;
+      this.headerActions = this.listData.dlHeaderAction;
+    }
     this.loadData();
-    this.headerActions = this.dlHeaderAction;
     this.displayedColumns = this.coloumnDefs.map(col => col.key);
     console.log('Displayed Columns:', this.displayedColumns);
-
   }
 
   loadData() {
-    this.commonService.getData('dailyLoanData').subscribe((res: any) => {
+    this.commonService.getData(this.listData.tableDataSource.apiDetails.url).subscribe((res: any) => {
     this.dataSource = res.data;
     console.log('Data Source:', this.dataSource);
     this.updatePagedData();
@@ -117,8 +122,24 @@ toggleAll(): void {
   }
 }
 
-checkedData() {
-console.log('Selected Rows:', this.selectedRows );
+apiCall(action: any) {
+console.log(action,'Selected Rows:', this.selectedRows );
+let body: any[] = [];
+for (let i = 0; i < this.selectedRows.length; i++) {
+  let item = this.selectedRows[i];
+  let obj: any = {};
+  for (let j = 0; j < action.apiDetails.body.length; j++) {
+    let element = action.apiDetails.body[j];
+    obj[element.key] = item[element.value];
+  }
+  body.push(obj);
+}
+console.log(body,'body');
+this.utilService.postApiCall(action.apiDetails.url, body).subscribe((res: any) => {
+  console.log(res);
+  this.utilService.openSwal('Payment Successfully', 'success', 'success', 'OK');
+})
+  
 }
 
 // downloadPDF() {
@@ -201,6 +222,15 @@ renderChart(): void {
     }
     const index = Math.abs(hash) % colors.length;
     return colors[index];
+  }
+  navigateToDetail(row: any, column: any) {
+    if(column.apiDetails?.body?.length > 0){
+      let params: any = {};
+      for(let i = 0; i < column.apiDetails.body.length; i++){
+        params[column.apiDetails.body[i]] = row[column.apiDetails.body[i]];
+      }
+      window.open(column.apiDetails.url + '?' + new URLSearchParams(params).toString(), '_blank');
+    }
   }
 }
 

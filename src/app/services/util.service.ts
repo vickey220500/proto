@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
-
-  constructor() { }
+  private baseUrl = 'http://localhost:3000/api';
+  constructor(private http: HttpClient) { }
 
   openSwal(title: string,text: any,icon: any,confirmButtonText: any) {
     Swal.fire({
@@ -29,23 +27,11 @@ export class UtilService {
   saveAs(blob, fileName);
 }
 
+postApiCall(url: string, body: any[]) {
+  return this.http.post(`${this.baseUrl}${url}`, {data:body});
+}
+getApiCall(url: string) {
+  return this.http.get(`${this.baseUrl}${url}`);
+} 
 
-// downloadPDF(data: any[], fileName: string = 'data.pdf') {
-//   const doc = new jsPDF();
-
-//   if (!data || data.length === 0) {
-//     doc.text('No data available', 10, 10);
-//   } else {
-//     const headers = [Object.keys(data[0])];
-//     const rows = data.map(item => Object.values(item));
-
-//     autoTable(doc, {
-//       head: headers,
-//       body: rows,
-//       startY: 20,
-//     });
-//   }
-
-//   doc.save(fileName);
-// }
 }

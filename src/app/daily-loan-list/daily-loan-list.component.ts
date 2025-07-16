@@ -47,14 +47,16 @@ tableDataSource:any;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  queryParams: any;
 
   constructor(private commonService: commonService, public utilService:UtilService,
     public router: Router,
     public route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.currentPageUrl = this.router.url.split('?')[0]
-    console.log(this.currentPageUrl,'currentpage',this.router);    
+    this.currentPageUrl = this.router.url.split('?')[0];
+    this.queryParams=this.route.snapshot.queryParams;
+    console.log(this.currentPageUrl,'currentpage',this.router,this.route.snapshot.queryParams);    
     if (this.currentPageUrl === '/dailyLoanList') {
       this.listData = dlListJson;
       this.coloumnDefs = this.listData.coloumnDefs;
@@ -74,7 +76,13 @@ tableDataSource:any;
   }
 
   loadData() {
-    this.commonService.getData(this.listData.tableDataSource.apiDetails.url).subscribe((res: any) => {
+    let params:any={}
+    if(this.listData?.tableDataSource?.apiDetails?.body){
+      this.listData.tableDataSource.apiDetails.body.forEach((e:any)=>{
+        params[e.key] = this.queryParams[e.value]
+      })
+    }
+    this.commonService.getData(this.listData.tableDataSource.apiDetails.url,params).subscribe((res: any) => {
     this.dataSource = res.data;
     console.log('Data Source:', this.dataSource);
     this.updatePagedData();
@@ -227,8 +235,9 @@ renderChart(): void {
     if(column.apiDetails?.body?.length > 0){
       let params: any = {};
       for(let i = 0; i < column.apiDetails.body.length; i++){
-        params[column.apiDetails.body[i]] = row[column.apiDetails.body[i]];
+        params[column.apiDetails.body[i].key] = row[column.apiDetails.body[i].value];
       }
+      console.log(params,'params');      
       window.open(column.apiDetails.url + '?' + new URLSearchParams(params).toString(), '_blank');
     }
   }

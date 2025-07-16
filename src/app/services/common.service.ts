@@ -14,8 +14,8 @@ export class commonService{
   sendData(data: any,url:string) {
     return this.http.post(`${this.baseUrl}/${url}`, data);
   }
-  getData(url:string) {
-    return this.http.get(`${this.baseUrl}${url}`);
+  getData(url:string,params:any) {
+    return this.http.get(`${this.baseUrl}${url}`,{params});
   }
   register(userName: string, password: string, role: string,email:string,phoneNumber:string,aadharNo:string,pancard:string,pincode:string,address:string): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, {userName,

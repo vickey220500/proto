@@ -3,7 +3,8 @@
     "coloumnDefs" : [
     { "key": "checkbox",  "type": "checkbox" },
     { "key": "profilePic", "label": "Profile", "type": "image" },
-      { "key": "loanId", "label": "Loan Id", "type": "routerlink", "apiDetails":{"url":"/dlTransactionDetail","body":["loanId"]} },
+    { "key": "loanId", "label": "Loan Id", "type": "routerlink", "apiDetails":{"url":"/dlTransactionDetail","body":[{"key":"loanId","value":"loanId"},{"key":"customerId","value":"customerId"}]} },
+    { "key": "customerId", "label": "Customer Id", "type": "text"},
     { "key": "name", "label": "Name", "type": "text" },
     { "key": "aadharNo", "label": "Aadhar No", "type":   "text" },
     { "key": "address", "label": "Address", "type": "text" },

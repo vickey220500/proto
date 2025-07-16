@@ -37,13 +37,13 @@
       "action":"route",
       "label":"Add",
       "icon":"add",
-      "route":"/dailyLoan"
+      "route":"/dpl"
     }
   ] ,
   "tableDataSource":{
     "type":"api",
     "apiDetails":{
-        "url":"/dailyLoanData",
+        "url":"/dplLoanData",
         "method":"get"
       }
   }

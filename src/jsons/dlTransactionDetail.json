@@ -45,7 +45,15 @@
     "type":"api",
     "apiDetails":{
         "url":"/getDLTxn",
-        "method":"get"
+        "method":"get",
+        "body":[{
+          "key":"loanId",
+          "value":"loanId"
+        },
+        {
+          "key":"customerId",
+          "value":"customerId"
+        }]
       }
   }
 }

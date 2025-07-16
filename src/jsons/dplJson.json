@@ -1,0 +1,149 @@
+[
+    {
+      "type": "text",
+      "label": "First Name",
+      "formControl": "firstName",
+      "mandatory": true
+    },
+    {
+      "type": "text",
+      "label": "Customer Type",
+      "formControl": "customerType",
+      "mandatory": true,
+      "hidden": true,
+      "value": "new"
+    },
+    {
+      "type": "text",
+      "label": "Last Name",
+      "formControl": "lastName"
+    },
+    {
+      "type": "number",
+      "label": "Age",
+      "formControl": "age",
+      "mandatory": true
+    },
+    {
+      "type": "text",
+      "label": "Address",
+      "formControl": "address",
+      "mandatory": true
+    },
+    {
+      "type": "number",
+      "label": "Mobile No",
+      "formControl": "mobileNumber",
+      "mandatory": true
+    },
+    {
+      "type": "email",
+      "label": "Email",
+      "formControl": "email",
+      "mandatory": false
+    },
+    {
+      "type": "number",
+      "label": "Addhar No",
+      "formControl": "aadharNo",
+      "mandatory": true
+    },
+    {
+      "type": "text",
+      "label": "PAN No",
+      "formControl": "panCardNumber",
+      "mandatory": true
+    },
+    {
+      "type": "number",
+      "label": "Pincode",
+      "formControl": "pincode",
+      "mandatory": true
+    },
+    {
+      "type": "number",
+      "label": "Borrow Amount",
+      "formControl": "borrowAmount",
+      "mandatory": true,
+      "changeLogic": [
+        {
+            "targetField": "interestAmount",
+            "details": {
+              "method": "interest",
+              "fields": ["borrowAmount", "interest","noOfDays"]
+            }
+        },
+        {
+            "targetField": "calculatedAmount",
+            "details": {
+              "method": "addition",
+              "fields": ["borrowAmount", "interestAmount"]
+            }
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "label": "Interest",
+      "formControl": "interest",
+      "mandatory": true,
+      "changeLogic": [
+        {
+            "targetField": "interestAmount",
+            "details": {
+              "method": "interest",
+              "fields": ["borrowAmount", "interest","noOfDays"]
+            }
+        },
+        {
+            "targetField": "calculatedAmount",
+            "details": {
+              "method": "addition",
+              "fields": ["borrowAmount", "interestAmount"]
+            }
+        }        
+      ]
+    },
+    {
+      "type": "number",
+      "label": "No. of Days",
+      "formControl": "noOfDays",
+      "mandatory": true,
+      "changeLogic":[
+      {
+        "targetField": "interestAmount",
+        "details": {
+          "method": "interest",
+          "fields": ["borrowAmount", "interest","noOfDays"]
+        }
+      },
+      {
+        "targetField": "calculatedAmount",
+        "details": {
+          "method": "addition",
+          "fields": ["borrowAmount", "interestAmount"]
+        }
+      }]
+    },
+    
+    {
+        "type": "number",
+        "label": "Interest Amount",
+        "formControl": "interestAmount",
+        "mandatory": true,
+        "readOnly": true
+      },
+    {
+      "type": "number",
+      "label": "Calculated Amount",
+      "formControl": "calculatedAmount",
+      "mandatory": true,
+      "readOnly": true
+    },
+    {
+      "type": "image",
+      "label": "Profile",
+      "formControl": "profilePic",
+      "mandatory": false
+    }
+  ]

@@ -15,6 +15,7 @@ import { UtilService } from '../services/util.service';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import dlJson from '../../jsons/dlJson.json';
+import dplJson from '../../jsons/dplJson.json'
 @Component({
   selector: 'app-daily-loan',
   standalone: true,
@@ -27,109 +28,7 @@ export class DailyLoanComponent {
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   videoStream: MediaStream | null = null;
   dailyLoan: any =[];
-  dpl: any = [
-    {
-      type: 'text',
-      label: 'First Name',
-      formControl: 'firstName',
-      mandatory: true,
-    },
-    {
-      type: 'text',
-      label: 'Customer Type',
-      formControl: 'customerType',
-      mandatory: true,
-      hidden: true,
-      value: 'new',
-    },
-    { type: 'text', label: 'Last Name', formControl: 'lastName' },
-    { type: 'number', label: 'Age', formControl: 'age', mandatory: true },
-    { type: 'text', label: 'Address', formControl: 'address', mandatory: true },
-    {
-      type: 'number',
-      label: 'Mobile No',
-      formControl: 'mobileNumber',
-      mandatory: true,
-    },
-    {
-      type: 'email',
-      label: 'Email',
-      formControl: 'email',
-      mandatory: false,
-    },
-    {
-      type: 'number',
-      label: 'Addhar No',
-      formControl: 'aadharNo',
-      mandatory: true,
-    },
-    {
-      type: 'text',
-      label: 'PAN No',
-      formControl: 'panNo',
-      mandatory: false,
-    },
-    {
-      type: 'number',
-      label: 'Pincode',
-      formControl: 'pincode',
-      mandatory: true,
-    },
-    {
-      type: 'number',
-      label: 'Borrow Amount',
-      formControl: 'borrowAmount',
-      mandatory: true,
-    },
-    {
-      type: 'number',
-      label: 'Interest',
-      formControl: 'interest',
-      mandatory: true,
-    },
-    {
-      type: 'number',
-      label: 'Interest Amount',
-      formControl: 'interestAmount',
-      mandatory: true,
-      hidden: true,
-    },
-    {
-      type: 'number',
-      label: 'No. of Days',
-      formControl: 'noOfDays',
-      mandatory: true,
-       changeLogic: [
-        {
-          targetField: 'interestAmount',
-          details: {
-            method: 'percentage',
-            fields: ['borrowAmount', 'interest'],
-          },
-        },
-        {
-          targetField: 'calculatedAmount',
-          details: {
-            method: 'addition',
-            fields: ['borrowAmount', 'interestAmount'],
-          },
-        },
-      ],
-    },
-    {
-      type: 'number',
-      label: 'Calculated Amount',
-      formControl: 'calculatedAmount',
-      mandatory: true,
-      readOnly: true,
-    },
-    {
-      type: 'image',
-      label: 'Profile',
-      formControl: 'profilePic',
-      mandatory: true,
-    },
-  ];
+  dpl: any = [];
   fieldConfigure: any = [];
   form!: FormGroup;
   title: string = 'Daily Loan Form';
@@ -138,6 +37,7 @@ export class DailyLoanComponent {
   showImageModal: boolean = false;
   showCaptureModal: boolean = false;
   currentPage: any;
+  formSubmissionUrl:any
 
   constructor(
     public fb: FormBuilder,
@@ -158,13 +58,15 @@ export class DailyLoanComponent {
         { label: 'Daily Loan' },
         { label: 'Daily Loan Form', active: true },
       ];
+      this.formSubmissionUrl='insertDailyLoan';
     } else if (this.currentPage === '/dpl') {
-      this.fieldConfigure = this.dpl;
+      this.fieldConfigure = dplJson;
       this.title = 'DPL Form';
       this.breadcrumbItems = [
         { label: 'DPL' },
         { label: 'DPL Form', active: true },
       ];
+      this.formSubmissionUrl='insertDPLoan';
     }
 
     this.createForm();
@@ -191,7 +93,7 @@ export class DailyLoanComponent {
     if (this.form.valid) {
       console.log('Form Data:', this.form.value);
       let data = this.form.value;
-      let url = 'insertDailyLoan';
+      let url = this.formSubmissionUrl;
       this.commonService.sendData(data, url).subscribe(
         (res: any) => {
           console.log('POST response:', res);
@@ -301,7 +203,12 @@ export class DailyLoanComponent {
       return values[0] * values[1];
     }else if (method === 'division') {
       return values[1] !== 0 ? values[0] / values[1] : 0; // Avoid division by zero
+    }else if (method === 'interest') {
+      // values[0]: Principal
+      // values[1]: Rate
+      // values[2]: Days
+      return (values[0] * values[1] * values[2]) / (365 * 100);
     }
-    return 0; // Default case, should not happen
+    return 0; 
   }
 }

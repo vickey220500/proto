@@ -1,0 +1,198 @@
+<div class="chit-detail-container">
+  <div class="header-section">
+    <button mat-button (click)="onBackToList()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      Back to List
+    </button>
+    <h1 class="page-title">Chit Fund Member Details</h1>
+  </div>
+
+  <div class="content-section" *ngIf="!loading; else loadingTemplate">
+    <!-- Member Information Card -->
+    <mat-card class="member-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="title-icon">person</mat-icon>
+          Member Information
+        </mat-card-title>
+        <mat-card-subtitle>Chit ID: {{ chitMember.chitId }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="member-info-grid">
+          <div class="info-item">
+            <label>Member Name:</label>
+            <span>{{ chitMember.memberName }}</span>
+          </div>
+          <div class="info-item">
+            <label>Aadhar Number:</label>
+            <span>{{ chitMember.aadharNo }}</span>
+          </div>
+          <div class="info-item">
+            <label>PAN Number:</label>
+            <span>{{ chitMember.panCardNumber }}</span>
+          </div>
+          <div class="info-item">
+            <label>Email:</label>
+            <span>{{ chitMember.email }}</span>
+          </div>
+          <div class="info-item">
+            <label>Mobile Number:</label>
+            <span>{{ chitMember.mobileNumber }}</span>
+          </div>
+          <div class="info-item">
+            <label>Age:</label>
+            <span>{{ chitMember.age }} years</span>
+          </div>
+          <div class="info-item full-width">
+            <label>Address:</label>
+            <span>{{ chitMember.address }}, Pincode: {{ chitMember.pincode }}</span>
+          </div>
+        </div>
+
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="status-section">
+          <mat-chip [color]="getStatusColor(chitMember.status)" selected>
+            {{ chitMember.status }}
+          </mat-chip>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Chit Fund Details Card -->
+    <mat-card class="chit-details-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="title-icon">account_balance</mat-icon>
+          Chit Fund Details
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="chit-details-grid">
+          <div class="detail-item">
+            <label>Chit Amount:</label>
+            <span class="amount">₹{{ chitMember.chitAmount?.toLocaleString() }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Monthly Contribution:</label>
+            <span class="amount">₹{{ chitMember.monthlyContribution?.toLocaleString() }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Total Months:</label>
+            <span>{{ chitMember.totalMonths }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Current Month:</label>
+            <span>{{ chitMember.currentMonth }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Start Date:</label>
+            <span>{{ chitMember.startDate | date:'mediumDate' }}</span>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <label>Progress: {{ chitMember.currentMonth }}/{{ chitMember.totalMonths }} months</label>
+          <mat-progress-bar 
+            mode="determinate" 
+            [value]="getProgressPercentage()"
+            class="progress-bar">
+          </mat-progress-bar>
+          <span class="progress-text">{{ getProgressPercentage() | number:'1.0-1' }}% Complete</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Financial Summary Card -->
+    <mat-card class="financial-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="title-icon">monetization_on</mat-icon>
+          Financial Summary
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="financial-grid">
+          <div class="financial-item">
+            <label>Total Paid:</label>
+            <span class="amount paid">₹{{ getTotalPaid().toLocaleString() }}</span>
+          </div>
+          <div class="financial-item">
+            <label>Total Pending:</label>
+            <span class="amount pending">₹{{ getTotalPending().toLocaleString() }}</span>
+          </div>
+          <div class="financial-item">
+            <label>Remaining Amount:</label>
+            <span class="amount remaining">₹{{ getRemainingAmount().toLocaleString() }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Transaction History Card -->
+    <mat-card class="transactions-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="title-icon">receipt_long</mat-icon>
+          Transaction History
+        </mat-card-title>
+        <mat-card-subtitle>Recent payment transactions</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="transactions-list" *ngIf="transactions.length > 0; else noTransactions">
+          <div class="transaction-item" *ngFor="let transaction of transactions">
+            <div class="transaction-header">
+              <span class="transaction-id">{{ transaction.transactionId }}</span>
+              <mat-chip [color]="getPaymentStatusColor(transaction.status)" selected>
+                {{ transaction.status }}
+              </mat-chip>
+            </div>
+            <div class="transaction-details">
+              <div class="transaction-info">
+                <span class="amount">₹{{ transaction.contributionAmount?.toLocaleString() }}</span>
+                <span class="month">Month {{ transaction.month }}</span>
+              </div>
+              <div class="transaction-meta">
+                <span class="date">{{ transaction.paymentDate | date:'mediumDate' }}</span>
+                <span class="method">{{ transaction.paymentMethod }}</span>
+              </div>
+              <div class="remarks" *ngIf="transaction.remarks">
+                <span>{{ transaction.remarks }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noTransactions>
+          <div class="no-transactions">
+            <mat-icon>receipt_long</mat-icon>
+            <p>No transactions found</p>
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="onAddPayment()">
+        <mat-icon>payment</mat-icon>
+        Add Payment
+      </button>
+      <button mat-raised-button color="accent" (click)="onEditMember()">
+        <mat-icon>edit</mat-icon>
+        Edit Member
+      </button>
+    </div>
+  </div>
+
+  <ng-template #loadingTemplate>
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Loading chit member details...</p>
+    </div>
+  </ng-template>
+</div> 

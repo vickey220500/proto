@@ -1,0 +1,44 @@
+{ 
+    "pageTitle":"CHIT FUND DETAILS",
+    "coloumnDefs" : [
+    { "key": "checkbox",  "type": "checkbox" },
+    { "key": "transactionId", "label": "Transaction ID", "type": "text" },
+    { "key": "memberName", "label": "Member Name", "type": "text" },
+    { "key": "contributionAmount", "label": "Contribution Amount", "type": "text" },
+    { "key": "month", "label": "Month", "type": "text" },
+    { "key": "paymentDate", "label": "Payment Date", "type": "date" },
+    { "key": "paymentMethod", "label": "Payment Method", "type": "text" },
+    { "key": "status", "label": "Status", "type": "text" },
+    { "key": "remarks", "label": "Remarks", "type": "text" }
+  ],
+  "dlHeaderAction" : [
+    {
+      "type":"button",
+      "label":"Add Payment",
+      "action":"apiCall",
+      "apiDetails":{
+        "url":"/addChitPayment",
+        "method":"post",
+        "body":[
+          {"key":"memberId","value":"memberId"},
+          {"key":"chitId","value":"chitId"},
+          {"key":"amount","value":"contributionAmount"}
+        ]
+      }
+    },
+    {
+      "type":"button",
+      "action":"route",
+      "label":"Back to List",
+      "icon":"arrow_back",
+      "route":"/chitList"
+    }
+  ] ,
+  "tableDataSource":{
+    "type":"api",
+    "apiDetails":{
+        "url":"/chitTransactionDetail",
+        "method":"get"
+      }
+  }
+} 

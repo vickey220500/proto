@@ -14,7 +14,9 @@ import { Chart, ChartConfiguration } from 'chart.js';
 import { ElementRef } from '@angular/core';
 import dlListJson from '../../jsons/dlListJson.json';
 import dplListJson from '../../jsons/dplListJson.json';
-import dlTransactionDetailJson from '../../jsons/dlTransactionDetail.json'
+import dlTransactionDetailJson from '../../jsons/dlTransactionDetail.json';
+import chitListJson from '../../jsons/chitListJson.json';
+import chitDetailJson from '../../jsons/chitDetailJson.json';
 @Component({
   selector: 'app-daily-loan-list',
   standalone: true,
@@ -67,6 +69,14 @@ tableDataSource:any;
       this.headerActions = this.listData.dlHeaderAction;
     } else if (this.currentPageUrl === '/dlTransactionDetail') {
       this.listData = dlTransactionDetailJson;
+      this.coloumnDefs = this.listData.coloumnDefs;
+      this.headerActions = this.listData.dlHeaderAction;
+    } else if (this.currentPageUrl === '/chitList') {
+      this.listData = chitListJson;
+      this.coloumnDefs = this.listData.coloumnDefs;
+      this.headerActions = this.listData.dlHeaderAction;
+    } else if (this.currentPageUrl === '/chitDetail') {
+      this.listData = chitDetailJson;
       this.coloumnDefs = this.listData.coloumnDefs;
       this.headerActions = this.listData.dlHeaderAction;
     }

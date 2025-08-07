@@ -1,0 +1,52 @@
+{ 
+    "pageTitle":"CHIT FUND LIST",
+    "coloumnDefs" : [
+    { "key": "checkbox",  "type": "checkbox" },
+    { "key": "profilePic", "label": "Profile", "type": "image" },
+    { "key": "chitId", "label": "Chit ID", "type": "routerlink", "apiDetails":{"url":"/chitDetail","body":["chitId"]} },
+    { "key": "memberName", "label": "Member Name", "type": "text" },
+    { "key": "aadharNo", "label": "Aadhar No", "type": "text" },
+    { "key": "address", "label": "Address", "type": "text" },
+    { "key": "age", "label": "Age", "type": "text" },
+    { "key": "chitAmount", "label": "Chit Amount", "type": "text" },
+    { "key": "monthlyContribution", "label": "Monthly Contribution", "type": "text" },
+    { "key": "totalMonths", "label": "Total Months", "type": "text" },
+    { "key": "currentMonth", "label": "Current Month", "type": "text" },
+    { "key": "email", "label": "Email", "type": "text" },
+    { "key": "mobileNumber", "label": "Mobile No", "type": "text" },
+    { "key": "panCardNumber", "label": "PAN No", "type": "text" },
+    { "key": "pincode", "label": "Pincode", "type": "text" },
+    { "key": "startDate", "label": "Start Date", "type": "date" },
+    { "key": "status", "label": "Status", "type": "text" }
+  ],
+  "dlHeaderAction" : [
+    {
+      "type":"button",
+      "label":"Pay Contribution",
+      "action":"apiCall",
+      "apiDetails":{
+        "url":"/chitContribution",
+        "method":"post",
+        "body":[
+          {"key":"memberId","value":"memberId"},
+          {"key":"chitId","value":"chitId"},
+          {"key":"amount","value":"monthlyContribution"}
+        ]
+      }
+    },
+    {
+      "type":"button",
+      "action":"route",
+      "label":"Add Chit Member",
+      "icon":"add",
+      "route":"/chit"
+    }
+  ] ,
+  "tableDataSource":{
+    "type":"api",
+    "apiDetails":{
+        "url":"/chitFundData",
+        "method":"get"
+      }
+  }
+} 

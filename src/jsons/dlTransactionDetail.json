@@ -1,22 +1,13 @@
 { 
     "pageTitle":"DL Transaction Details",
     "coloumnDefs" : [
-    { "key": "checkbox",  "type": "checkbox" },
-    { "key": "profilePic", "label": "Profile", "type": "image" },
-      { "key": "loanId", "label": "Loan Id", "type": "routerlink", "apiDetails":{"url":"/dlTransactionDetail","body":["loanId"]} },
-    { "key": "amount", "label": "Amount", "type": "text" },
-    { "key": "name", "label": "Name", "type": "text" },
-    { "key": "aadharNo", "label": "Aadhar No", "type":   "text" },
-    { "key": "address", "label": "Address", "type": "text" },
-    { "key": "age", "label": "Age", "type": "text" },
-    { "key": "borrowAmount", "label": "Borrow Amount", "type": "text" },
-    { "key": "interest", "label": "Interest (%)", "type": "text" },
-    { "key": "email", "label": "Email", "type": "text" },
-    { "key": "mobileNumber", "label": "Mobile No", "type": "text" },
-    { "key": "panCardNumber", "label": "PAN No", "type": "text" },
-    { "key": "pincode", "label": "Pincode", "type": "text" },
-    { "key": "createdAt", "label": "Created Date", "type": "date" },
-    { "key": "perDayAmount", "label": "Per Day Amount", "type": "text" }
+      { "key": "transactionId", "label": "Transaction Id", "type": "text"},
+      { "key": "customerId", "label": "Customer Id", "type": "text"},
+      { "key": "loanId", "label": "Loan Id", "type": "text"},
+      { "key": "amount", "label": "Amount", "type": "text" },
+      { "key": "borrowAmount", "label": "Borrow Amount", "type": "text" },
+      { "key": "perDayAmount", "label": "Per Day Amount", "type": "text" },
+      { "key": "createdAt", "label": "Transaction Date", "type": "date" }
   ],
   "dlHeaderAction" : [
     {

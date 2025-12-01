@@ -1,4 +1,4 @@
-{ 
+{
     "pageTitle":"CHIT FUND LIST",
     "coloumnDefs" : [
     { "key": "checkbox",  "type": "checkbox" },
@@ -45,8 +45,8 @@
   "tableDataSource":{
     "type":"api",
     "apiDetails":{
-        "url":"/chitFundData",
+        "url":"/chitGroups",
         "method":"get"
       }
   }
-} 
+}

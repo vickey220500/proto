@@ -11,15 +11,15 @@
     <mat-card-content>
       <form [formGroup]="chitForm" (ngSubmit)="onSubmit()">
         <mat-stepper [linear]="isLinear" #stepper>
-          
+
           <!-- Step 1: Personal Information -->
-          <mat-step [stepControl]="chitForm" label="Personal Information">
-            <div class="step-content">
+          <mat-step [stepControl]="chitForm.get('personal')!" label="Personal Information">
+            <div class="step-content" formGroupName="personal">
               <div class="form-row">
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Full Name</mat-label>
                   <input matInput formControlName="memberName" placeholder="Enter full name">
-                  <mat-error *ngIf="chitForm.get('memberName')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('personal.memberName')?.hasError('required')">
                     Full name is required
                   </mat-error>
                 </mat-form-field>
@@ -27,10 +27,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Aadhar Number</mat-label>
                   <input matInput formControlName="aadharNo" placeholder="12-digit Aadhar number" maxlength="12">
-                  <mat-error *ngIf="chitForm.get('aadharNo')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('personal.aadharNo')?.hasError('required')">
                     Aadhar number is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('aadharNo')?.hasError('pattern')">
+                  <mat-error *ngIf="chitForm.get('personal.aadharNo')?.hasError('pattern')">
                     Please enter a valid 12-digit Aadhar number
                   </mat-error>
                 </mat-form-field>
@@ -40,10 +40,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>PAN Number</mat-label>
                   <input matInput formControlName="panCardNumber" placeholder="ABCDE1234F" maxlength="10">
-                  <mat-error *ngIf="chitForm.get('panCardNumber')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('personal.panCardNumber')?.hasError('required')">
                     PAN number is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('panCardNumber')?.hasError('pattern')">
+                  <mat-error *ngIf="chitForm.get('personal.panCardNumber')?.hasError('pattern')">
                     Please enter a valid PAN number
                   </mat-error>
                 </mat-form-field>
@@ -51,10 +51,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Email</mat-label>
                   <input matInput formControlName="email" placeholder="example@email.com" type="email">
-                  <mat-error *ngIf="chitForm.get('email')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('personal.email')?.hasError('required')">
                     Email is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('email')?.hasError('email')">
+                  <mat-error *ngIf="chitForm.get('personal.email')?.hasError('email')">
                     Please enter a valid email address
                   </mat-error>
                 </mat-form-field>
@@ -64,10 +64,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Mobile Number</mat-label>
                   <input matInput formControlName="mobileNumber" placeholder="10-digit mobile number" maxlength="10">
-                  <mat-error *ngIf="chitForm.get('mobileNumber')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('personal.mobileNumber')?.hasError('required')">
                     Mobile number is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('mobileNumber')?.hasError('pattern')">
+                  <mat-error *ngIf="chitForm.get('personal.mobileNumber')?.hasError('pattern')">
                     Please enter a valid 10-digit mobile number
                   </mat-error>
                 </mat-form-field>
@@ -75,31 +75,30 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Age</mat-label>
                   <input matInput formControlName="age" placeholder="Age" type="number" min="18" max="65">
-                  <mat-error *ngIf="chitForm.get('age')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('personal.age')?.hasError('required')">
                     Age is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('age')?.hasError('min') || chitForm.get('age')?.hasError('max')">
+                  <mat-error *ngIf="chitForm.get('personal.age')?.hasError('min') || chitForm.get('personal.age')?.hasError('max')">
                     Age must be between 18 and 65
                   </mat-error>
                 </mat-form-field>
               </div>
             </div>
-
             <div class="step-actions">
-              <button mat-button matStepperNext type="button" [disabled]="!chitForm.get('memberName')?.valid || !chitForm.get('aadharNo')?.valid || !chitForm.get('panCardNumber')?.valid || !chitForm.get('email')?.valid || !chitForm.get('mobileNumber')?.valid || !chitForm.get('age')?.valid">
+              <button mat-button matStepperNext type="button" [disabled]="!chitForm.get('personal')?.valid">
                 Next
               </button>
             </div>
           </mat-step>
 
           <!-- Step 2: Address Information -->
-          <mat-step [stepControl]="chitForm" label="Address Information">
-            <div class="step-content">
+          <mat-step [stepControl]="chitForm.get('address')!" label="Address Information">
+            <div class="step-content" formGroupName="address">
               <div class="form-row">
                 <mat-form-field appearance="outline" class="form-field full-width">
                   <mat-label>Address</mat-label>
                   <textarea matInput formControlName="address" placeholder="Enter complete address" rows="3"></textarea>
-                  <mat-error *ngIf="chitForm.get('address')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('address.address')?.hasError('required')">
                     Address is required
                   </mat-error>
                 </mat-form-field>
@@ -109,10 +108,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Pincode</mat-label>
                   <input matInput formControlName="pincode" placeholder="6-digit pincode" maxlength="6">
-                  <mat-error *ngIf="chitForm.get('pincode')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('address.pincode')?.hasError('required')">
                     Pincode is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('pincode')?.hasError('pattern')">
+                  <mat-error *ngIf="chitForm.get('address.pincode')?.hasError('pattern')">
                     Please enter a valid 6-digit pincode
                   </mat-error>
                 </mat-form-field>
@@ -121,23 +120,23 @@
 
             <div class="step-actions">
               <button mat-button matStepperPrevious type="button">Back</button>
-              <button mat-button matStepperNext type="button" [disabled]="!chitForm.get('address')?.valid || !chitForm.get('pincode')?.valid">
+              <button mat-button matStepperNext type="button" [disabled]="!chitForm.get('address')?.valid">
                 Next
               </button>
             </div>
           </mat-step>
 
           <!-- Step 3: Chit Fund Details -->
-          <mat-step [stepControl]="chitForm" label="Chit Fund Details">
-            <div class="step-content">
+          <mat-step [stepControl]="chitForm.get('chitDetails')!" label="Chit Fund Details">
+            <div class="step-content" formGroupName="chitDetails">
               <div class="form-row">
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Chit Amount (₹)</mat-label>
                   <input matInput formControlName="chitAmount" placeholder="Total chit amount" type="number" min="10000" (blur)="calculateMonthlyContribution()">
-                  <mat-error *ngIf="chitForm.get('chitAmount')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('chitDetails.chitAmount')?.hasError('required')">
                     Chit amount is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('chitAmount')?.hasError('min')">
+                  <mat-error *ngIf="chitForm.get('chitDetails.chitAmount')?.hasError('min')">
                     Minimum chit amount is ₹10,000
                   </mat-error>
                 </mat-form-field>
@@ -145,10 +144,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Total Months</mat-label>
                   <input matInput formControlName="totalMonths" placeholder="Duration in months" type="number" min="12" max="60" (blur)="calculateMonthlyContribution()">
-                  <mat-error *ngIf="chitForm.get('totalMonths')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('chitDetails.totalMonths')?.hasError('required')">
                     Total months is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('totalMonths')?.hasError('min') || chitForm.get('totalMonths')?.hasError('max')">
+                  <mat-error *ngIf="chitForm.get('chitDetails.totalMonths')?.hasError('min') || chitForm.get('chitDetails.totalMonths')?.hasError('max')">
                     Duration must be between 12 and 60 months
                   </mat-error>
                 </mat-form-field>
@@ -159,10 +158,10 @@
                   <mat-label>Monthly Contribution (₹)</mat-label>
                   <input matInput formControlName="monthlyContribution" placeholder="Monthly contribution amount" type="number" min="1000" readonly>
                   <mat-hint>Auto-calculated based on chit amount and duration</mat-hint>
-                  <mat-error *ngIf="chitForm.get('monthlyContribution')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('chitDetails.monthlyContribution')?.hasError('required')">
                     Monthly contribution is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('monthlyContribution')?.hasError('min')">
+                  <mat-error *ngIf="chitForm.get('chitDetails.monthlyContribution')?.hasError('min')">
                     Minimum monthly contribution is ₹1,000
                   </mat-error>
                 </mat-form-field>
@@ -172,7 +171,7 @@
                   <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" placeholder="Choose start date">
                   <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #startDatePicker></mat-datepicker>
-                  <mat-error *ngIf="chitForm.get('startDate')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('chitDetails.startDate')?.hasError('required')">
                     Start date is required
                   </mat-error>
                 </mat-form-field>
@@ -181,20 +180,20 @@
 
             <div class="step-actions">
               <button mat-button matStepperPrevious type="button">Back</button>
-              <button mat-button matStepperNext type="button" [disabled]="!chitForm.get('chitAmount')?.valid || !chitForm.get('totalMonths')?.valid || !chitForm.get('monthlyContribution')?.valid || !chitForm.get('startDate')?.valid">
+              <button mat-button matStepperNext type="button" [disabled]="!chitForm.get('chitDetails')?.valid">
                 Next
               </button>
             </div>
           </mat-step>
 
           <!-- Step 4: Emergency Contact -->
-          <mat-step [stepControl]="chitForm" label="Emergency Contact">
-            <div class="step-content">
+          <mat-step [stepControl]="chitForm.get('emergency')!" label="Emergency Contact">
+            <div class="step-content" formGroupName="emergency">
               <div class="form-row">
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Emergency Contact Name</mat-label>
                   <input matInput formControlName="emergencyContactName" placeholder="Emergency contact person name">
-                  <mat-error *ngIf="chitForm.get('emergencyContactName')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('emergency.emergencyContactName')?.hasError('required')">
                     Emergency contact name is required
                   </mat-error>
                 </mat-form-field>
@@ -202,10 +201,10 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Emergency Contact Number</mat-label>
                   <input matInput formControlName="emergencyContactNumber" placeholder="10-digit mobile number" maxlength="10">
-                  <mat-error *ngIf="chitForm.get('emergencyContactNumber')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('emergency.emergencyContactNumber')?.hasError('required')">
                     Emergency contact number is required
                   </mat-error>
-                  <mat-error *ngIf="chitForm.get('emergencyContactNumber')?.hasError('pattern')">
+                  <mat-error *ngIf="chitForm.get('emergency.emergencyContactNumber')?.hasError('pattern')">
                     Please enter a valid 10-digit mobile number
                   </mat-error>
                 </mat-form-field>
@@ -222,7 +221,7 @@
                     <mat-option value="Friend">Friend</mat-option>
                     <mat-option value="Other">Other</mat-option>
                   </mat-select>
-                  <mat-error *ngIf="chitForm.get('emergencyContactRelation')?.hasError('required')">
+                  <mat-error *ngIf="chitForm.get('emergency.emergencyContactRelation')?.hasError('required')">
                     Relationship is required
                   </mat-error>
                 </mat-form-field>
@@ -249,4 +248,4 @@
       </button>
     </mat-card-actions>
   </mat-card>
-</div> 
+</div>

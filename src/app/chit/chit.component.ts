@@ -10,7 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { commonService } from '../services/common.service';
 import { UtilService } from '../services/util.service';
 
@@ -35,17 +35,38 @@ import { UtilService } from '../services/util.service';
 })
 export class ChitComponent implements OnInit {
   chitForm!: FormGroup;
+  chitGroupForm!: FormGroup;
   isLinear = true;
+  showGroupForm = false;
 
   constructor(
     private fb: FormBuilder,
     private commonService: commonService,
     private utilService: UtilService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.initForm();
+    this.initGroupForm();
+
+    // Check if coming from chitList with mode=group
+    this.route.queryParams.subscribe(params => {
+      if (params['mode'] === 'group') {
+        this.showGroupForm = true;
+      }
+    });
+  }
+
+  initGroupForm() {
+    this.chitGroupForm = this.fb.group({
+      groupName: ['', [Validators.required, Validators.minLength(3)]],
+      chitAmount: ['', [Validators.required, Validators.min(10000)]],
+      totalMonths: ['', [Validators.required, Validators.min(12), Validators.max(60)]],
+      monthlyContribution: ['', [Validators.required, Validators.min(1000)]],
+      startDate: ['', Validators.required]
+    });
   }
 
   initForm() {
@@ -145,4 +166,37 @@ export class ChitComponent implements OnInit {
       chitDetailsGroup?.patchValue({ monthlyContribution });
     }
   }
-} 
+
+  calculateGroupMonthlyContribution() {
+    const chitAmount = this.chitGroupForm.get('chitAmount')?.value;
+    const totalMonths = this.chitGroupForm.get('totalMonths')?.value;
+
+    if (chitAmount && totalMonths && totalMonths > 0) {
+      const monthlyContribution = Math.ceil(chitAmount / totalMonths);
+      this.chitGroupForm.get('monthlyContribution')?.setValue(monthlyContribution, { emitEvent: false });
+    }
+  }
+
+  submitChitGroup() {
+    if (this.chitGroupForm.valid) {
+      const payload = {
+        groupName: this.chitGroupForm.get('groupName')?.value,
+        chitAmount: this.chitGroupForm.get('chitAmount')?.value,
+        totalMonths: this.chitGroupForm.get('totalMonths')?.value,
+        monthlyContribution: this.chitGroupForm.get('monthlyContribution')?.value,
+        startDate: this.chitGroupForm.get('startDate')?.value,
+        status: 'Active'
+      };
+
+      this.commonService.sendData(payload,'createChitGroup').subscribe({
+        next: (response: any) => {
+          this.utilService.openSwal('Chit group created successfully!', 'success', 'success', 'OK');
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error: any) => {
+          this.utilService.openSwal('Error creating chit group', 'error', 'error', 'OK');
+        }
+      });
+    }
+  }
+}

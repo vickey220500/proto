@@ -41,7 +41,7 @@
         </button>
       <ng-container *ngFor="let action of headerActions">
         <button *ngIf="action.type === 'button' && action.action==='route'" class="btn btn-primary" [routerLink]="action.route"
-          routerLinkActive="router-link-active" style="margin-right: 8px;" type="button">
+          [queryParams]="action.queryParams" routerLinkActive="router-link-active" style="margin-right: 8px;" type="button">
           {{ action.label }}<mat-icon>{{ action.icon }}</mat-icon>
         </button>
         <button *ngIf="action.type === 'button' && action.action==='apiCall'" style="margin-right: 8px;" class="btn btn-primary" (click)="apiCall(action)" type="button">

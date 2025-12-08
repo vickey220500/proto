@@ -38,6 +38,8 @@ export class ChitComponent implements OnInit {
   chitGroupForm!: FormGroup;
   isLinear = true;
   showGroupForm = false;
+  chitList: any[] = [];
+  selectedChitId: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +57,35 @@ export class ChitComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] === 'group') {
         this.showGroupForm = true;
+      }
+      if (params['chitId']) {
+        this.selectedChitId = params['chitId'];
+      }
+    });
+
+    // load chit list for dropdown
+    this.loadChitList();
+  }
+
+  loadChitList() {
+    this.commonService.getData('/chitGroups', {}).subscribe({
+      next: (response: any) => {
+        // response.data could be array or object
+        this.chitList = response?.data || response || [];
+        // if route provided chitId, attempt to load its details
+        if (this.selectedChitId) {
+          // try to find in list
+          const found = this.chitList.find((c: any) => c.chitId === this.selectedChitId || c.id === this.selectedChitId);
+          if (found) {
+            this.onChitIdChange(found);
+          } else {
+            // fallback: request server for specific chit
+            this.onChitIdChange(this.selectedChitId);
+          }
+        }
+      },
+      error: (err) => {
+        console.error('Error loading chit list', err);
       }
     });
   }
@@ -121,7 +152,7 @@ export class ChitComponent implements OnInit {
       formData.status = 'Active';
       formData.currentMonth = 1;
 
-      this.commonService.sendData(formData, 'addChitMember').subscribe({
+      this.commonService.sendData(formData, 'registerChitMember').subscribe({
         next: (response: any) => {
           this.utilService.openSwal('Chit member added successfully!', 'success', 'success', 'OK');
           this.router.navigate(['/chitList']);
@@ -175,6 +206,56 @@ export class ChitComponent implements OnInit {
       const monthlyContribution = Math.ceil(chitAmount / totalMonths);
       this.chitGroupForm.get('monthlyContribution')?.setValue(monthlyContribution, { emitEvent: false });
     }
+  }
+
+  /**
+   * Called when user selects a chit ID from the dropdown in the form.
+   * Accepts either the chit object or an id string.
+   */
+  onChitIdChange(selected: any) {
+    const selectedId = selected?.chitId || selected?.id || selected;
+    if (!selectedId) return;
+    this.selectedChitId = selectedId;
+
+    // Try to find the selected chit in already loaded list
+    const found = this.chitList.find((c: any) => c.chitId === selectedId || c.id === selectedId) || null;
+    if (found) {
+      this.patchChitDetailsFromObject(found);
+      return;
+    }
+
+    // If not found locally, request backend for this chit
+    this.commonService.getData('/chitList', { chitId: selectedId }).subscribe({
+      next: (response: any) => {
+        const data = response?.data || response;
+        const chitObj = Array.isArray(data) ? data[0] : data;
+        if (chitObj) {
+          this.patchChitDetailsFromObject(chitObj);
+        }
+      },
+      error: (err) => {
+        console.error('Error loading selected chit details', err);
+      }
+    });
+  }
+
+  private patchChitDetailsFromObject(obj: any) {
+    const chitDetailsGroup = this.chitForm.get('chitDetails') as FormGroup;
+    if (!chitDetailsGroup) return;
+
+    const patch: any = {};
+    if (obj.chitAmount !== undefined) patch.chitAmount = obj.chitAmount;
+    if (obj.totalMonths !== undefined) patch.totalMonths = obj.totalMonths;
+    if (obj.monthlyContribution !== undefined) patch.monthlyContribution = obj.monthlyContribution;
+    if (obj.startDate) {
+      // convert to Date if it's a string
+      patch.startDate = obj.startDate instanceof Date ? obj.startDate : new Date(obj.startDate);
+    }
+
+    chitDetailsGroup.patchValue(patch);
+
+    // Recalculate monthly contribution if only amount and months present
+    this.calculateMonthlyContribution();
   }
 
   submitChitGroup() {

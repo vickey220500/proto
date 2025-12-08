@@ -7,6 +7,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { commonService } from '../services/common.service';
 import { UtilService } from '../services/util.service';
@@ -23,6 +26,9 @@ import { UtilService } from '../services/util.service';
     MatChipsModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
     RouterModule
   ],
   templateUrl: './chit-detail.component.html',
@@ -33,6 +39,10 @@ export class ChitDetailComponent implements OnInit {
   transactions: any[] = [];
   loading = true;
   chitId: string = '';
+  chitGroups: any[] = [];
+  selectedChitGroup: any = null;
+  chitList: any[] = [];
+  selectedChitId: any = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,19 +53,29 @@ export class ChitDetailComponent implements OnInit {
 
   ngOnInit() {
     this.chitId = this.route.snapshot.queryParams['chitId'];
+    // load supporting lists
+    this.loadChitGroups();
+    this.loadChitList();
+
     if (this.chitId) {
-      this.loadChitMemberDetails();
-      this.loadTransactions();
+      this.selectedChitId = this.chitId;
+      this.loadChitMemberDetails(this.chitId);
+      this.loadTransactions(this.chitId);
     } else {
       this.utilService.openSwal('Chit ID not found', 'error', 'error', 'OK');
       this.router.navigate(['/chitList']);
     }
   }
 
-  loadChitMemberDetails() {
-    this.commonService.getData('/chitMemberDetail', { chitId: this.chitId }).subscribe({
+  loadChitMemberDetails(chitId?: string) {
+    const id = chitId || this.chitId;
+    if (!id) return;
+    this.commonService.getData('/chitMemberDetail', { chitId: id }).subscribe({
       next: (response: any) => {
         this.chitMember = response.data;
+        if (this.chitGroups && this.chitMember?.groupId) {
+          this.selectedChitGroup = this.chitGroups.find(g => g.id === this.chitMember.groupId) || null;
+        }
         this.loading = false;
       },
       error: (error) => {
@@ -65,8 +85,10 @@ export class ChitDetailComponent implements OnInit {
     });
   }
 
-  loadTransactions() {
-    this.commonService.getData('/chitTransactionDetail', { chitId: this.chitId }).subscribe({
+  loadTransactions(chitId?: string) {
+    const id = chitId || this.chitId;
+    if (!id) return;
+    this.commonService.getData('/chitTransactionDetail', { chitId: id }).subscribe({
       next: (response: any) => {
         this.transactions = response.data || [];
       },
@@ -74,6 +96,43 @@ export class ChitDetailComponent implements OnInit {
         console.error('Error loading transactions:', error);
       }
     });
+  }
+
+  loadChitGroups() {
+    this.commonService.getData('/chitGroups', {}).subscribe({
+      next: (response: any) => {
+        this.chitGroups = response?.data || response || [];
+        if (this.chitMember && this.chitMember.groupId) {
+          this.selectedChitGroup = this.chitGroups.find(g => g.id === this.chitMember.groupId) || null;
+        }
+      },
+      error: (err) => {
+        console.error('Error loading chit groups', err);
+      }
+    });
+  }
+
+  loadChitList() {
+    this.commonService.getData('/chitList', {}).subscribe({
+      next: (response: any) => {
+        this.chitList = response?.data || response || [];
+        if (this.chitId) {
+          const found = this.chitList.find((c: any) => c.chitId === this.chitId || c.id === this.chitId);
+          this.selectedChitId = found || this.chitId;
+        }
+      },
+      error: (err) => {
+        console.error('Error loading chit list', err);
+      }
+    });
+  }
+
+  onChitIdChange(selected: any) {
+    const selectedId = selected?.chitId || selected?.id || selected;
+    if (!selectedId) return;
+    this.chitId = selectedId;
+    this.loadChitMemberDetails(this.chitId);
+    this.loadTransactions(this.chitId);
   }
 
   getProgressPercentage(): number {
@@ -135,4 +194,4 @@ export class ChitDetailComponent implements OnInit {
     const totalExpected = (this.chitMember.monthlyContribution || 0) * (this.chitMember.totalMonths || 0);
     return totalExpected - this.getTotalPaid();
   }
-} 
+}

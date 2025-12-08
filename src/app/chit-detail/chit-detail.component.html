@@ -70,6 +70,17 @@
       </mat-card-header>
 
       <mat-card-content>
+        <!-- Chit ID dropdown: options fetched from backend -->
+        <div class="chit-id-select">
+          <mat-form-field appearance="outline" class="chit-id-field">
+            <mat-label>Chit ID</mat-label>
+            <mat-select [value]="selectedChitId" (selectionChange)="onChitIdChange($event.value)">
+              <mat-option *ngFor="let c of chitList" [value]="c.chitId || c.id || c">
+                {{ (c.chitId || c.id || c) + (c.name ? ' - ' + c.name : '') }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
         <div class="chit-details-grid">
           <div class="detail-item">
             <label>Chit Amount:</label>
@@ -95,8 +106,8 @@
 
         <div class="progress-section">
           <label>Progress: {{ chitMember.currentMonth }}/{{ chitMember.totalMonths }} months</label>
-          <mat-progress-bar 
-            mode="determinate" 
+          <mat-progress-bar
+            mode="determinate"
             [value]="getProgressPercentage()"
             class="progress-bar">
           </mat-progress-bar>
@@ -195,4 +206,4 @@
       <p>Loading chit member details...</p>
     </div>
   </ng-template>
-</div> 
+</div>

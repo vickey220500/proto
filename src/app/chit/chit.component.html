@@ -130,6 +130,14 @@
           <mat-step [stepControl]="chitForm.get('chitDetails')!" label="Chit Fund Details">
             <div class="step-content" formGroupName="chitDetails">
               <div class="form-row">
+                <mat-form-field appearance="outline" class="chit-id-field">
+                  <mat-label>Chit ID</mat-label>
+                  <mat-select [value]="selectedChitId" (selectionChange)="onChitIdChange($event.value)">
+                    <mat-option *ngFor="let c of chitList" [value]="c.chitId || c.id || c">
+                      {{ c.chitId  + (c.name ? ' - ' + c.name : '') }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
                 <mat-form-field appearance="outline" class="form-field">
                   <mat-label>Chit Amount (₹)</mat-label>
                   <input matInput formControlName="chitAmount" placeholder="Total chit amount" type="number" min="10000" (blur)="calculateMonthlyContribution()">

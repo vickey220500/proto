@@ -1,0 +1,48 @@
+{
+    "pageTitle":"GROUP LIST",
+    "coloumnDefs" : [
+    { "key": "checkbox",  "type": "checkbox" },
+    { "key": "profilePic", "label": "Profile", "type": "image" },
+    { "key": "memberId", "label": "Member ID", "type": "text" },
+    { "key": "memberName", "label": "Member Name", "type": "text" },
+    { "key": "chitAmount", "label": "Chit Amount", "type": "text" },
+    { "key": "panCardNumber", "label": "PAN Number", "type": "text" },
+    { "key": "aadharNo", "label": "Aadhar Number", "type": "text" },
+    { "key": "mobileNumber", "label": "Mobile Number", "type": "text" },
+    { "key": "startDate", "label": "Start Date", "type": "date" },
+    { "key": "endDate", "label": "End Date", "type": "date" },
+    { "key": "status", "label": "Status", "type": "text" }
+  ],
+  "dlHeaderAction" : [
+    {
+      "type":"button",
+      "label":"Pay Contribution",
+      "action":"apiCall",
+      "apiDetails":{
+        "url":"/partialPayment",
+        "method":"post",
+         "body":[
+          {"key":"memberId","value":"memberId"},
+          {"key":"chitId","value":"chitId"},
+          {"key":"paymentAmount","value":"monthlyContribution"},
+          {"key":"paymentMonth","value":"monthlyContribution"}
+        ]
+      }
+    },
+    {
+      "type":"button",
+      "action":"route",
+      "label":"Add Member",
+      "icon":"add",
+      "route":"/chit"
+    }
+  ] ,
+  "tableDataSource":{
+    "type":"api",
+    "apiDetails":{
+        "url":"/chitGroup",
+        "method":"get",
+        "body":[{ "key":"chitId" ,"value":"chitId"}]
+      }
+  }
+}

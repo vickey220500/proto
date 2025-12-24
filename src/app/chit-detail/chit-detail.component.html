@@ -75,8 +75,8 @@
           <mat-form-field appearance="outline" class="chit-id-field">
             <mat-label>Chit ID</mat-label>
             <mat-select [value]="selectedChitId" (selectionChange)="onChitIdChange($event.value)">
-              <mat-option *ngFor="let c of chitList" [value]="c.chitId || c.id || c">
-                {{ (c.chitId || c.id || c) + (c.name ? ' - ' + c.name : '') }}
+              <mat-option *ngFor="let c of chitList" [value]="c.chitId">
+                {{ (c.chitId) + (c.groupName ? ' - ' + c.groupName : '') }}
               </mat-option>
             </mat-select>
           </mat-form-field>

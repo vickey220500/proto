@@ -1,9 +1,8 @@
 {
-    "pageTitle":"CHIT FUND LIST",
+    "pageTitle":"CHIT LIST",
     "coloumnDefs" : [
     { "key": "checkbox",  "type": "checkbox" },
-    { "key": "profilePic", "label": "Profile", "type": "image" },
-    { "key": "chitId", "label": "Chit ID", "type": "routerlink", "apiDetails":{"url":"/chitDetail","body":["chitId"]} },
+    { "key": "chitId", "label": "Chit ID", "type": "routerlink", "apiDetails":{"url":"/chitGroupDetail","body":[{"key":"chitId","value":"chitId"}]} },
     { "key": "groupName", "label": "Group Name", "type": "text" },
     { "key": "chitAmount", "label": "Chit Amount", "type": "text" },
     { "key": "monthlyContribution", "label": "Monthly Contribution", "type": "text" },
@@ -18,26 +17,27 @@
       "label":"Pay Contribution",
       "action":"apiCall",
       "apiDetails":{
-        "url":"/chitContribution",
+        "url":"/partialPayment",
         "method":"post",
         "body":[
           {"key":"memberId","value":"memberId"},
           {"key":"chitId","value":"chitId"},
-          {"key":"amount","value":"monthlyContribution"}
+          {"key":"paymentAmount","value":"monthlyContribution"},
+          {"key":"paymentMonth","value":"monthlyContribution"}
         ]
       }
     },
     {
       "type":"button",
       "action":"route",
-      "label":"Add Chit Member",
+      "label":"Add Member",
       "icon":"add",
       "route":"/chit"
     },
     {
       "type":"button",
       "action":"route",
-      "label":"Create Chit Group",
+      "label":"Create Group",
       "icon":"groups",
       "route":"/chit",
       "queryParams":{"mode":"group"}

@@ -148,7 +148,7 @@ export class ChitComponent implements OnInit {
       };
 
       // Generate chit ID and metadata
-      formData.chitId = 'CHIT' + Date.now();
+      formData.chitId = this.selectedChitId;
       formData.status = 'Active';
       formData.currentMonth = 1;
 

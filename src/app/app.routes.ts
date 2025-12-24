@@ -23,6 +23,7 @@ export const routes: Routes = [
         {path:'dpl',component:DailyLoanComponent},
         {path:'dplList',component:DailyLoanListComponent},
         {path:'chitList',component:DailyLoanListComponent},
+        {path:'chitGroupDetail',component:DailyLoanListComponent},
         {path:'chit',component:ChitComponent},
         {path:'chitDetail',component:ChitDetailComponent},
         {path:'chit-payment',component:ChitPaymentComponent},

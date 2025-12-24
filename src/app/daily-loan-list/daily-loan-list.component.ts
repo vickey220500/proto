@@ -17,6 +17,7 @@ import dplListJson from '../../jsons/dplListJson.json';
 import dlTransactionDetailJson from '../../jsons/dlTransactionDetail.json';
 import chitListJson from '../../jsons/chitListJson.json';
 import chitDetailJson from '../../jsons/chitDetailJson.json';
+import chitGroupDetailJson from '../../jsons/chitGroupDetail.json';
 @Component({
   selector: 'app-daily-loan-list',
   standalone: true,
@@ -28,11 +29,8 @@ import chitDetailJson from '../../jsons/chitDetailJson.json';
 })
 export class DailyLoanListComponent {
    dataSource : any= []
-
   displayedColumns: any[] = []
-
  coloumnDefs: any[]=[];
-
  headerAction:any;
 listData:any;
   // dataSource:any = [ { "firstName": "Vignesh", "lastName": "", "aadharNo": 123456789012, "address": "123, Gandhi Street, Chennai", "age": 28, "borrowAmount": 50000, "interest": 7.5, "email": "abc@example.com", "mobileNumber": 9876543210, "panCardNumber": "ABCDE1234F", "pincode": 600001, "profilePic": { "data": "base64", "contentType": "image/png" } }];
@@ -46,8 +44,6 @@ chart: Chart | undefined;
 showChart: boolean = false;
 currentPageUrl: any;
 tableDataSource:any;
-
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   queryParams: any;
 
@@ -58,7 +54,7 @@ tableDataSource:any;
   ngOnInit() {
     this.currentPageUrl = this.router.url.split('?')[0];
     this.queryParams=this.route.snapshot.queryParams;
-    console.log(this.currentPageUrl,'currentpage',this.router,this.route.snapshot.queryParams);    
+    console.log(this.currentPageUrl,'currentpage',this.router,this.route.snapshot.queryParams);
     if (this.currentPageUrl === '/dailyLoanList') {
       this.listData = dlListJson;
       this.coloumnDefs = this.listData.coloumnDefs;
@@ -77,6 +73,10 @@ tableDataSource:any;
       this.headerActions = this.listData.dlHeaderAction;
     } else if (this.currentPageUrl === '/chitDetail') {
       this.listData = chitDetailJson;
+      this.coloumnDefs = this.listData.coloumnDefs;
+      this.headerActions = this.listData.dlHeaderAction;
+    } else if (this.currentPageUrl === '/chitGroupDetail') {
+      this.listData = chitGroupDetailJson;
       this.coloumnDefs = this.listData.coloumnDefs;
       this.headerActions = this.listData.dlHeaderAction;
     }
@@ -157,7 +157,7 @@ this.utilService.postApiCall(action.apiDetails.url, body).subscribe((res: any) =
   console.log(res);
   this.utilService.openSwal('Payment Successfully', 'success', 'success', 'OK');
 })
-  
+
 }
 
 // downloadPDF() {
@@ -247,7 +247,7 @@ renderChart(): void {
       for(let i = 0; i < column.apiDetails.body.length; i++){
         params[column.apiDetails.body[i].key] = row[column.apiDetails.body[i].value];
       }
-      console.log(params,'params');      
+      console.log(params,'params');
       window.open(column.apiDetails.url + '?' + new URLSearchParams(params).toString(), '_blank');
     }
   }
